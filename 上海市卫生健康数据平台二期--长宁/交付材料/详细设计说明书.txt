@@ -1,0 +1,3418 @@
+
+
+
+长宁卫生健康数智基座项目（一期）
+
+详细设计说明书
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+科大讯飞（上海）科技有限公司
+
+2025年3月
+
+1引言
+1.1编写目的
+　　本详细设计说明书，是在概要设计说明书的基础上进一步明确系统结构，详细的介绍系统的各个模块，为进行后面的编码和测试做准备。
+1.2项目背景
+　　　“十四五”时期是全民健康信息化建设创新引领卫生健康事业高质量发展的重要机遇期，也是以数字化、网络化、智能化转型推动卫生健康工作实现质量变革、效率变革、动力变革的关键窗口期。2021年3月，《中华人民共和国国民经济和社会发展第十四个五年规划和2035年远景目标纲要》（以下简称“纲要”）发布，纲要中指出：提高数字政府建设水平。将数字技术广泛应用于政府管理服务，推动政府治理流程再造和模式优化，不断提高决策科学性和服务效率。在智慧医疗领域，完善电子健康档案和病历、电子处方等数据库，加快医疗卫生机构数据共享。推广远程医疗，推进医学影像辅助判读、临床辅助诊断等应用。运用大数据提升对医疗机构和医疗行为的监管能力。
+　　　2023年4月，上海市城市数字化转型工作领导小组办公室关于印发《2023年度上海市“便捷就医服务”数字化转型3.0工作方案》（沪数字化办[2023]2号）的通知，基于卫生健康行业原有成果，充分运用云计算、大数据、人工智能等数字化技术，赋能智慧医疗创新应用场景，为提升诊疗水平、提供医疗服务提供数字化支撑，对接医疗数字化转型中的共性需求，筑牢医疗服务数字化转型底层基石，夯实卫生健康行业产业智慧化发展基础，实现“1+1+1+1”的立体式行业数字化基座。
+　　　2021年10月，《长宁区全面推进城市数字化转型 “十四五”规划》（长科委〔2021〕22号），数字健康方面，深化拓展人口健康信息化工程，1家社区卫生服务中心达到EHR测评6级标准，7家通过了5级测评，2家通过了4级测评。建设分级诊疗服务管理平台，为家庭医生、业务专家和管理人员提供统一的信息平台，提供居民签约、统一服务入口。重点围绕三大系统建设，构建支撑系统运行服务的移动、互联网、区域医疗三网融合的网络环境，直接对接云HIS，实现移动端挂号、实时查询临检中心报告、支持家床用药的处方外送，延伸处方等功能服务。升级改造区卫生应急指挥中心，建立基于信息化的医防联动应急处置平台;推动智能助医项目建设，打造智能助医应用服务体系，赋能社区卫生服务机构与基层医生，进一步提升社区卫生健康综合服务能力。
+　　　综上，在“十四五”时期，全民健康信息化建设将迎来重要机遇期。2021年3月，《中华人民共和国国民经济和社会发展第十四个五年规划和2035年远景目标纲要》提出了提高数字政府建设水平的目标，并在智慧医疗领域做出了明确规划。2022年11月，《“十四五”全民健康信息化规划》发布，确立了全民健康信息化发展目标，包括初步建设全民健康信息平台支撑体系、加速推进全民健康信息化基础设施建设等。此外，各级政府也相继出台了一系列支持数字化转型的政策文件和实施方案。在地方层面，上海市和长宁区都制定了城市数字化转型规划，并在数字健康方面做出了积极探索和努力。例如，上海市通过建设智慧医疗应急体系和推动数字健康城区建设等举措，促进了数字健康服务的发展。长宁区则深化了人口健康信息化工程，建设了分级诊疗服务管理平台，提升了社区卫生健康综合服务能力。未来的医疗健康数字化转型建设应以更高的标准、更严格的要求，推动卫生健康行业迈向数字化转型，为人民群众提供更加便捷、高效、优质的医疗健康服务。
+1.3项目定义
+项目的名称：长宁卫生健康数智基座项目（一期）
+项目的任务提出者：上海市长宁区公立医院和社区卫生管理中心
+用户：上海市长宁区公立医院和社区卫生管理中心、上海市长宁区区属医疗机构
+实现该软件的计算机网络：上海市长宁区卫生专网
+1.4参考资料
+1.4.1信息类标准与规范
+?中华人民共和国标准化法
+?中华人民共和国电子签名法
+?信息公开条例
+?中华人民共和国计算机信息系统安全保护条例
+?中华人民共和国计算机信息网络国际联网管理暂行规定
+?电子政务保密管理指南
+?涉及国家秘密的信息系统分级保护管理规范（BMB20-2007）
+?涉及国家秘密的信息系统分级保护技术要求（BMB17-2006）
+?信息安全等级保护管理办法
+?国家信息化领导小组关于我国电子政务建设指导意见
+?国家电子政务标准化指南总则
+?信息技术 信息交换用汉字编码字符集 基本集的扩充（GB 18030-2000）
+?信息交换用汉字编码字符集基本集（GB 2312-1980）
+?政务信息资源交换体系GB/T 21062.2-2007
+?计算机软件文档编制规范（GB/T 8567-2006）
+?计算机软件需求规格说明编制指南（GB 9385-1988）
+?计算机软件测试文件编制规范（GB 9386-1988）
+?软件开发与文档编制（SJ/20778-2000）
+?软件生存周期过程（GB/T 8566-2001）
+?计算机软件质量保证计划规范（GB/T 12504-90）
+	
+
+
+2建设目标
+　　　长宁数智基座，作为长宁区医疗数字化转型的核心战略和支撑平台，奉行“统一规划，分步实施”的策略，共计分为三期完成建设。旨在通过整合资源、优化服务，提升医疗卫生领域的数字化水平和服务质量，实现全民健康信息化管理的目标。到2025年，该基座已初步建设形成了统一权威、互联互通的支撑保障体系，为公立医疗卫生机构提供了全面的技术支持与信息共享平台，确保医疗服务的全覆盖和高效运行。
+　　　通过数字化技术的应用，医疗卫生服务得以更广泛地渗透到社会各个角落，业务各环节实现了更紧密的连接与协同，智能化的管理与应用提升了工作效率与服务质量，数据的集约共享使得医疗资源得到更加合理的配置，安全可控的体系保障了医疗信息的隐私与完整性。
+　　　长宁区全民健康信息统筹管理能力显著增强，医疗卫生机构间的信息互通共享取得了标志性进展。未来通过数智基座的支持，数字健康服务已成为医疗卫生服务的重要组成部分，为每个居民建立了一份动态管理的个性化电子健康档案，实现了医疗信息的全面管理和共享。同时，卫生健康行业机构的数字化、资源网络化、服务智能化和监管一体化等方面基本形成，为长宁区建设全面的全民健康信息服务体系奠定了坚实基础。一期建设总体目标如下：
+　　　一期夯实卫生健康数智基座基础，为医疗服务人员减负提效，提升医疗卫生监管能级。针对数据烟囱、系统流程不连续、医疗资源不均衡、监管滞后等突出问题，一期将重点完成数智基座的建设，统一全区数据采集标准规范，实现所有机构产生的医疗卫生数据的汇聚、清洗与转换，实现跨机构、跨系统数据共享，提升临床诊疗效率。同时以基座数据为基础，一是进一步增加转诊疾病种类和丰富转诊内容，让居民就近享受到同仁、天山等优质资源；二是面向管理人员，多维度展示全区医疗运行状况，为本区卫生健康政策研究、制定相关政策提供决策依据。
+3建设内容
+　　　本项目主要建设内容包括：
+序号	　	系统名称
+1.1	数智基座
+1.1.1	用户中心	统一桌面应用系统
+1.1.2	数据中心
+　	标准术语管理子系统
+1.1.3		主索引管理子系统
+1.1.4		数据调度任务子系统
+1.1.5		前置数据集成子系统
+1.1.6		数据质量监管子系统
+1.1.7		医疗行为主题库
+1.1.8		系统接入
+1.1.9	监管中心	综合监管系统
+1.1.10	应用中心	区域医技预约平台
+1.1.11		传染病数据登记子系统
+1.1.12		慢阻肺管理系统
+1.1.13		房屋管理系统
+1.1.14		全科医生轮转系统
+1.1.15	低代码平台	低代码应用平台
+1.1.16	数据治理	历史数据治理
+1.2	系统软件
+1.3	信创云IaaS资源服务
+
+4详细功能设计
+4.1.用户中心
+4.1.应用集成门户详细设计
+4.1.1.门户首页模块详细设计
+4.1.1.1.业务场景分析
+　　　门户首页作为集成各系统的统一入口发挥着关键作用。业务员、普通用户以及业务领导、管理员等人员在获取平台账号和密码后，通过输入账号密码或手机号与短信验证码进行登录。若身份验证成功，便可进入门户首页，在此页面中，他们能够看到平台已集成的各个子系统的名称和介绍，并且只有在登录账号已进行应用授权的情况下，才能看到所授权应用的入口。用户可以将常用应用添加到 “我的应用” 中，提高工作效率。页面还展示顶部导航栏、应用列表、我的待办、通知公告、轮播图、banner 图等内容，方便用户获取各类信息。用户点击不同应用菜单图标可进入具体应用的管理界面，也可点击 “退出” 退出当前登录账号，或点击 “后台管理” 进入后台管理系统，满足不同的业务操作需求，提升了系统使用的便捷性和集成性。
+4.1.1.2.业务层
+4.1.1.2.1.时序图
+
+4.1.1.2.2.实体模型
+
+4.1.1.3.功能设计
+4.1.1.3.1.页面名称
+　　　查看路径：系统登录——门户首页
+　　　
+4.1.1.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　系统集成与统一入口
+　　　2	　　　个性化内容展现
+　　　3	　　　应用管理
+　　　4	　　　权限管理
+　　　表 业务范围
+　　　2）功能描述：
+?1. 门户首页展示：提供顶部导航栏（展示系统名称和登录账号名称）、应用列表（显示应用分类名称、应用名称和应用说明）、我的待办、通知公告、轮播图、banner 图等功能，作为集成各种应用系统的统一入口。
+?2. 我的应用管理：允许用户将常用应用添加到 “我的应用” 中，提升操作便捷性和工作效率。
+?3. 登录验证：用户通过输入账号密码或手机号与短信验证码进行登录，系统进行身份验证，若用户名和密码错误提示错误信息，若忘记密码可跳转找回密码页面。
+?4. 操作交互：点击【退出】可退出当前登录账号；点击【后台管理】进入后台管理系统；点击不同应用菜单图标可进入该应用对应的管理界面。
+4.1.2.用户中心模块详细设计
+4.1.2.1.业务场景分析
+　　　用户中心功能为用户提供了一个管理个人信息和平台使用设置的区域。业务员、普通用户以及业务领导、管理员等在成功登录门户首页后，能够以卡片模式查看自己的身份信息，且信息按照组织机构体系展示。用户可以在卡片上清晰看到自己当前登录的机构、账号以及用户名称。同时，用户中心还展示了平台的隐私政策、用户协议以及用户管理规则公约，用户可点击查看详细内容，并且默认展示最新版本，也支持查看历史记录。当用户有修改密码的需求时，可以在用户中心进行操作，或者直接选择退出平台账号登录状态。此外，用户在平台上个人收藏关注的通知公告内容也能在用户中心查看。当用户切换登录账号或者修改账号密码后重新登录，用户中心会根据新的登录用户信息更新并显示相应的卡片内容，确保用户获取准确的个人信息和平台设置，提升用户对平台使用的管理和掌控能力。
+4.1.2.2.业务层
+4.1.2.2.1.时序图
+
+4.1.2.2.2.实体模型
+
+4.1.2.3.功能设计
+4.1.2.3.1.页面名称
+　　　查看路径：系统登录——医疗统一门户——个人信息中心
+　　　
+4.1.2.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　个人信息展示
+　　　2	　　　政策协议查看
+　　　3	　　　账号管理
+　　　4	　　　个人收藏管理
+　　　表 业务范围
+　　　2）功能描述：
+?1. 个人资料查看：用户登录后，点击【用户登录账号】可显示个人信息卡片，查看用户名、用户账号和机构名称，机构信息与登录账号选择相关联。
+?2. 政策协议展示：展示平台的隐私政策和用户服务协议内容，包括《用户协议》和《用户管理规则公约》，默认展示最新版本，支持查看历史记录。
+?3. 账号操作：用户可在用户中心进行密码修改操作，或者直接选择退出平台账号登录状态，实现对账号的有效管理。
+?4. 个人收藏查看：在用户中心显示用户个人收藏关注的通知公告内容，便于用户随时查阅已收藏的重要信息。
+?5. 信息更新：当用户切换登录账号或者修改账号密码后重新登录，用户中心根据新的登录用户信息更新并显示相应的卡片内容。
+4.2.3.系统模板模块详细设计
+4.2.3.1.业务场景分析
+　　系统模板功能为管理员提供了便捷的门户创建方式。管理员在获取平台账号和密码并成功登录统一门户管理后台后，进入系统模板界面，能够看到系统按照统一设计规范内置的丰富门户模板。这些模板以卡片列表形式展示，管理员可以通过点击 “预览” 按钮查看每个模板的详细样式，了解其布局和内容。当管理员需要创建新的门户时，可基于已有的系统模板进行操作，点击 “复制” 按钮，新门户将继承所选系统模板的样式布局，随后管理员可以在门户设计页面进行样式调整，如修改部分内容、调整页面元素等，最后保存设置，形成适用于当前机构的独特门户样式。由于系统模板由平台提供且不允许编辑，这保证了模板的规范性和一致性，同时也为管理员在创建门户时提供了标准化的基础样式，节省了设计时间和精力，提升了门户创建的效率和质量。
+4.2.3.2.业务层
+4.2.3.2.1.时序图
+
+4.2.3.2.2.实体模型
+
+4.2.3.3.功能设计
+4.2.3.3.1.页面名称
+　　　查看路径：系统登录——医疗统一门户——系统模板
+
+4.2.3.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　系统模板展示
+　　　2	　　　新门户创建
+　　　3	　　　模板管理
+　　　表 业务范围
+　　　2）功能描述：
+?1. 模板列表查看：管理员登录平台进入系统模板界面，以卡片列表形式展示所有系统内置模板，模板按系统内置时间倒序排列，可直观查看模板的名称和 “官方模板” 标签。
+?2. 模板预览：点击【预览】按钮，查看系统模板详情页面，了解模板的具体样式和布局。
+?3. 模板复制：点击【复制】按钮，继承系统模板的门户样式，自动跳转至门户设计页面，管理员可在该页面进行样式调整和内容修改，保存后形成当前机构的门户样式。
+?4. 模板管理：系统模板由平台提供且不允许编辑，确保模板的规范性和一致性，为管理员创建门户提供标准化基础样式。
+4.2.4.我的门户模块详细设计
+4.2.4.1.业务场景分析
+　　　“我的门户” 功能为交付人员提供了灵活的门户配置能力。交付人员登录统一门户管理后台后，可进入 “我的门户” 界面，查看基于系统模板或已有模板创建的门户列表。这些门户以卡片形式展示，支持按名称模糊搜索和创建时间倒序排列。交付人员能通过 “预览” 按钮查看门户样式，对 “待使用” 状态的门户可点击 “编辑” 跳转至设计页面修改内容。若需复用已有门户样式，可点击 “复制” 继承布局并调整后保存为新样式。当门户样式配置完成，交付人员通过 “使用” 操作，在弹出的机构树弹窗中选择当前机构及子级机构范围，使所选门户在对应机构生效为 “使用中” 状态，且每个机构仅允许一个 “使用中” 门户，确保前台用户登录时看到统一规范的界面。此外，上级机构门户禁止编辑，保障了整体架构的稳定性与规范性，助力交付人员高效管理多机构的门户定制需求。
+4.2.4.2.业务层
+4.2.4.2.1.时序图
+
+4.2.4.2.2.实体模型
+
+4.2.4.3.功能设计
+4.2.4.3.1.页面名称
+　　　查看路径：系统登录——医疗统一门户——我的门户
+　　　
+4.2.4.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　门户定制与管理
+　　　2	　　　门户状态控制
+　　　3	　　　机构范围配置
+　　　4	　　　权限管控
+　　　表 业务范围
+　　　2）功能描述：
+?1. 门户列表查看：以卡片形式展示 “我的门户”，支持按名称模糊搜索与创建时间倒序排序，显示门户名称、状态及机构生效范围。
+?2. 预览与编辑：点击【预览】查看门户详情；对 “待使用” 门户点击【编辑】跳转设计页修改内容。
+?3. 复制与复用：点击【复制】继承已有门户样式，跳转设计页调整后保存为新样式。
+?4. 生效配置：点击【使用】弹出机构树弹窗，勾选目标机构（含子级）后确认，使门户在所选机构变为 “使用中”，同时原生效门户转为 “待使用”。
+?5. 权限限制：上级机构门户禁止编辑操作，保障架构稳定性。
+4.1.5.门户涉及模块详细设计
+4.1.5.1.业务场景分析
+　　　门户设计功能为管理员 / 交付人员提供了可视化的页面搭建能力。登录平台进入设计界面后，管理员可通过拖拽式操作自由组合顶部导航栏、待办事项、通知公告等板块，并调整板块的位置、尺寸及样式细节。例如，通过全局配置可设定门户名称、背景图（需按规范格式上传）、展示模式（平铺或留白）及宽度限制，同时指定门户适用的机构范围（支持当前机构及子级）；在板块配置环节，可从系统预设的 UI 样式库中选择各板块模板，进一步定制板块名称、logo、数据内容及边距等参数。布局过程采用 vue-grid-layout 等技术实现可视化拖拽与尺寸灵活调整，完成设计后点击保存即可应用配置，使前台用户登录时呈现个性化门户界面，满足不同机构在信息展示、功能集成及视觉风格上的差异化需求。
+4.1.5.2.业务层
+4.1.5.2.1.时序图
+
+4.1.5.2.2.实体模型
+
+4.1.5.3.功能设计
+4.1.5.3.1.页面名称
+　　　查看路径：系统登录——医疗统一门户——门户设计
+　　　
+　　　
+4.1.5.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　全局门户配置
+　　　2	　　　板块个性化定制
+　　　3	　　　可视化布局管理
+　　　4	　　　多机构适配
+　　　表 业务范围
+　　　2）功能描述：
+?1. 全局配置：点击【全局配置】弹窗，设置门户名称、背景图（按规范上传）、展示模式（平铺 / 留白）、机构生效范围及宽度限制。
+?2. 板块配置：选择各板块样式模板，自定义板块名称、logo、数据内容及内外边距等参数。
+?3. 拖拽布局：基于 vue-grid-layout 等技术，拖拽调整板块位置与尺寸，高度灵活可变。
+?4. 保存与应用：点击【保存】存储配置并返回 “我的门户” 列表，前台用户按新配置展示；点击【返回】放弃修改。
+?5. 刷新功能：点击【刷新配置】即时更新板块内容与布局状态。
+4.1.6.应用管理模块详细设计
+4.1.6.1.业务场景分析
+　　应用管理功能赋予管理员集中管控接入应用的能力。管理员登录平台后进入应用管理界面，可查看按创建时间倒序排列的应用列表，通过应用名称或编码快速筛选所需应用。当有新应用需接入时，点击【新增应用】弹窗填写名称、logo、跳转地址及分类等信息，保存后应用管理列表新增记录，同时门户展示对应应用信息；若需调整已接入应用，点击【编辑】修改名称、图标等细节。此外，管理员可对应用分类进行三级管理，执行新增、编辑操作，若分类下关联应用则禁止删除，确保分类体系稳定。整个过程中，应用展示权限与账号绑定，无权限账号登录门户时不显示应用信息，以此保障系统资源访问的规范性，助力管理员高效整合与维护门户应用生态。
+4.1.6.2.业务层
+4.1.6.2.1.时序图
+
+4.1.6.2.2.实体模型
+
+4.1.6.3.功能设计
+4.1.6.3.1.页面名称
+　　　查看路径：系统登录——医疗统一门户——应用管理
+
+
+4.1.6.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　应用全生命周期管理
+　　　2	　　　应用分类管控
+　　　3	　　　权限关联展示
+　　　4	　　　列表筛选与排序
+　　　表 业务范围
+　　　2）功能描述：
+?1. 应用列表展示：按创建时间倒序呈现应用名称、编码、描述等字段，支持名称 / 编码模糊搜索。
+?2. 新增应用：点击【新增应用】弹窗录入名称、logo、跳转地址、分类等信息，保存后同步更新管理列表与门户展示。
+?3. 编辑与详情：点击【编辑】修改应用信息；点击【详情】查看完整配置内容。
+?4. 分类管理：新增分类需填写名称、编码及级别，已关联应用的分类禁止删除，确保层级结构稳定。
+?5. 权限控制：通过账号权限配置决定应用是否在门户展示，支持设置打开方式（新标签页 / 覆盖）。
+4.1.7.banner管理模块详细设计
+4.1.7.1.业务场景分析
+　　Banner 管理功能为管理员提供了首页核心视觉元素的维护能力。管理员登录平台后台进入 Banner 管理界面后，可查看按创建时间倒序排列的 Banner 卡片列表，通过名称模糊搜索快速定位目标项。当需要推广新活动或业务入口时，点击【新增 Banner】弹窗上传图片、填写标题并配置三方跳转链接，保存后列表新增记录并同步至门户首页展示；若需优化已有 Banner 内容，对未使用状态的项可点击【编辑】调整图文及链接信息。对于不再需要的 Banner，管理员可执行删除操作（需二次确认），但正在首页展示的 Banner 因涉及实时运营需求，禁止编辑与删除，以保障用户访问体验的稳定性。该功能助力管理员高效管控门户首页核心展示位，灵活传递品牌形象与业务重点信息。
+4.1.7.2.业务层
+4.1.7.2.1.时序图
+
+4.1.7.2.2.实体模型
+
+4.1.7.3.功能设计
+4.1.7.3.1.页面名称
+　　　查看路径：系统登录——医疗统一门户——banner管理
+　　　
+4.1.7.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　Banner 全生命周期管理
+　　　2	　　　列表展示与检索
+　　　3	　　　使用状态管控
+　　　表 业务范围
+　　　2）功能描述：
+?1. 列表查看：按创建时间倒序展示 Banner 名称、链接地址等字段，支持名称模糊搜索定位。
+?2. 新增操作：点击【新增 Banner】弹窗上传图片、填写标题并配置跳转链接，保存后同步更新列表与首页展示。
+?3. 编辑与删除：对未使用的 Banner 点击【编辑】修改内容；点击【删除】需二次确认（使用中项不可操作）。
+?4. 状态保护：正在首页展示的 Banner 锁定编辑与删除权限，保障界面稳定性
+4.1.8.轮播图模块详细设计
+4.1.8.1.业务场景分析
+　　　轮播图管理功能为管理员提供了高效配置首页动态展示内容的能力。管理员登录平台后台进入轮播图管理界面后，可看到按创建时间倒序排列的轮播图卡片列表，通过名称或编码模糊搜索快速定位目标轮播图。当需要更新首页展示内容（如推广新活动、展示热门新闻）时，点击【新增轮播图】弹窗，填写轮播图名称、编码，上传图片、设置标题及跳转三方链接，并调整图片轮播顺序，保存后列表新增记录并同步至门户首页展示。对于未投入使用的轮播图，可点击【编辑】修改图文、链接及顺序等信息；若需移除不再使用的轮播图，可点击【删除】并确认操作。但正在首页展示的轮播图出于运营稳定性考虑，禁止编辑与删除，确保用户访问门户时看到的动态内容连贯且准确，助力管理员灵活管理首页核心展示区域，提升信息传达效率与用户关注度。
+4.1.8.2.业务层
+4.1.8.2.1.时序图
+
+4.1.8.2.2.实体模型
+
+4.1.8.3.功能设计
+4.1.8.3.1.页面名称
+　　　查看路径：系统登录——医疗统一门户——轮播图管理
+　　　
+4.1.8.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　轮播图全生命周期管理
+　　　2	　　　列表展示与检索
+　　　3	　　　使用状态管控
+　　　表 业务范围
+　　　2）功能描述：
+?	1. 列表查看：按创建时间倒序展示轮播图名称、链接地址等字段，支持名称和编码模糊搜索定位。
+?2. 新增操作：点击【新增轮播图】弹窗录入名称、编码，上传图片、设置标题、链接及轮播顺序，保存后同步更新列表与首页展示。
+?3. 编辑与删除：对未使用的轮播图点击【编辑】修改内容；点击【删除】需二次确认（使用中项不可操作）。
+?4. 状态保护：正在首页展示的轮播图锁定编辑与删除权限，确保动态展示内容的连续性。
+4.1.9.通知公告管理模块详细设计
+4.1.9.1.业务场景分析
+　　　通知公告管理功能为管理员提供了统一的信息发布与管控平台。管理员登录后台进入通知公告管理界面后，可通过列表查看自定义公告和三方接入公告内容，支持按标题、时间范围、状态模糊搜索，并按创建时间倒序排列。创建自定义公告时，需填写标题、封面图、来源及详细内容，保存后为草稿状态，经审核通过后可发布至前台门户展示；已发布公告仅支持下架操作，不可编辑删除。对于三方公告，管理员维护接入来源信息后，系统定时拉取内容并自动同步至门户，同样支持置顶操作。此外，系统提供批量审核、发布、下架功能，且支持单篇公告置顶，确保重要信息优先展示，保障组织内外部信息高效触达与规范管理。
+4.1.9.2.业务层
+4.1.9.2.1.时序图
+
+4.1.9.2.2.实体模型
+
+4.1.9.3.功能设计
+4.1.9.3.1.页面名称
+　　　查看路径：系统登录——医疗统一门户——公告管理——公告列表
+　　　
+　　　
+　　　
+4.1.9.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　自定义公告全流程管理
+　　　2	　　　三方公告接入与同步
+　　　3	　　　公告展示管控
+　　　4	　　　搜索与排序
+　　　表 业务范围
+　　　2）功能描述：
+?1. 列表查看：分 tab 展示自定义与三方公告，显示标题、状态等字段，支持多条件搜索及倒序排列。
+?2. 自定义公告操作：
+?　- 新增 / 编辑：填写标题、封面等内容，草稿状态可修改；
+?　- 审核：弹出窗口判定通过 / 不通过（需填理由）；
+?　- 发布：审核后状态变更为 “已发布”，前台展示；
+?　- 下架：已发布公告可下架回 “待发布”，前台隐藏；
+?　- 删除：仅允许删除草稿状态公告。
+?3. 三方公告管理：配置来源信息（名称 / 路径），自动同步内容，支持详情查看与置顶。
+?4. 批量与置顶操作：
+?　- 批量：按选中公告状态启用对应按钮（审核 / 发布 / 下架）；
+?　- 置顶：单篇置顶（已置顶可取消），优先展示重要公告。
+4.1.10.待办管理模块详细设计
+4.1.10.1.业务场景分析
+　　　待办管理功能助力管理员集中管控三方待办来源。管理员登录平台后台进入待办配置界面后，可查看按更新时间倒序排列的三方待办来源列表，通过来源名称模糊搜索快速定位目标项。当需接入新的待办系统时，点击【新增】弹窗填写来源名称、路径地址及待办 logo 等信息，保存后列表新增记录，门户随即自动同步该来源的待办内容；若需调整已有配置，可点击【编辑】修改相关信息。对于不再使用的三方待办来源，管理员可点击【删除】并确认操作，删除后对应待办内容将从门户展示中移除。此功能实现了三方待办信息的统一配置与实时同步，确保用户在门户中获取完整、及时的待办任务提醒，提升跨系统协作效率与任务管理便捷性。
+4.1.10.2.业务层
+4.1.10.2.1.时序图
+
+4.1.10.2.2.实体模型
+
+4.1.10.3.功能设计
+4.1.10.3.1.页面名称
+　　　查看路径：系统登录——医疗统一门户——三方待办配置管理
+　　　
+4.1.10.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　三方待办来源管理
+　　　2	　　　待办内容同步
+　　　3	　　　列表展示与检索
+　　　4	　　　展示控制
+　　　表 业务范围
+　　　2）功能描述：
+?1. 列表查看：按更新时间倒序展示三方待办来源名称、路径地址、更新时间等字段，支持名称模糊搜索定位。
+?2. 新增操作：点击【新增】弹窗录入来源名称、路径地址、待办 logo 等信息，保存后门户自动同步该来源待办内容。
+?3. 编辑与删除：点击【编辑】修改配置信息；点击【删除】需二次确认，删除后对应待办内容从门户移除。
+?4. 实时同步：维护配置后系统自动获取三方待办内容，确保门户展示与源系统数据一致。
+
+4.2.数据中心
+4.2.1医疗主数据管理系统
+
+系统功能模块图
+　　　医疗主数据管理系统主要分为内置主数据、自定义主数据建模、主数据管理、主数据审核、主数据发布、主数据查询等功能模块。
+主要模块功能说明如下：
+模块名称	功能	功能简述
+内置主数据	机构主数据	支持查询机构。支持用户为指定机构新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。数据总共有草稿、审核中、待发布、草稿驳回、变更驳回、正常、冻结七个状态。不同状态下的数据有不同的操作功能。
+	科室主数据	支持用户为指定科室新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。
+	卫生人员主数据	支持用户为卫生人员主数据模型新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。
+	药品主数据	支持用户为药品主数据模型新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。
+	耗材主数据	支持用户为耗材主数据模型新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。
+	疾病主数据	支持用户为模型新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。
+	检查主数据	支持用户为模型新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。
+	检验主数据	支持用户为模型新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。
+	手术主数据	支持用户为模型新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。
+	行政区划主数据	支持用户为模型新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。
+	患者主数据	支持用户为模型新增数据，导入数据以及编辑、删除、提交审核、取消变更等功能。
+自定义主数据	主数据建模	支持用户在本模块中新增数据模型，用户自主新增的模型提供编辑和删除功能，已添加了字段的数据模型不可删除。支持用户为数据模型新增字段、编辑字段以及删除字段等
+	主数据管理	支持用户为自己建立的自定义主数据模型新增数据，并将数据提交审核等功能
+	主数据审核	待处理中可以看到所有的请求审核的数据，并执行审核通过或驳回操作；已处理中可查看所有处理过的数据。
+	主数据发布	在【主数据审核】中审核通过的数据都会进入待发布状态，在【主数据发布】中可以查看到这些数据。此模块的功能将数据发布后，数据状态更改为正常。
+	主数据查询	主数据查询模块主要用于对已发布的数据进行停用、启用和查看数据版本的功能
+导入记录		显示导入文件的总条数，以及导入成功的总条数。对于存在导入失败数据的文件提供下载功能，下载文件中包含导入失败原因。
+
+4.2.1.1.内置主数据
+4.2.1.1.1功能
+　　　内置主数据包括机构、科室、卫生人员、药品、耗材、疾病、检查、检验、手术、行政区划、患者等内置数据进行单独管理的流程：
+1.新增机构、科室、卫生人员、药品、耗材、疾病、检查、检验、手术、行政区划、患者数据。
+2.数据提交审核。
+3.数据审核通过并发布
+4.2.1.1.2流程逻辑
+4.2.1.1.2.1内置主数据管理
+
+4.2.1.1.3输入项
+4.2.1.1.3.1机构主数据列表
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/org/mdm/list
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+pageNumber	数值	Y	当前页码，从 1 开始	
+pageSize	数值	Y	每页条数	
+total	数值	Y	总条数，传 0 表示重新计算总条数	
+filter	对象	Y	过滤条件	
+regionCode	数值	N	行政区划编码	
+orgName	字符	N	机构名称	
+orgType	字符	N	医疗机构类别代码	
+parentOrgName	字符	N	父级机构名称	
+medLevelCode	字符	N	医疗机构等级代码	
+primaryOrgType	字符	N	基层医疗机构类型代码	
+orgAddrDetail	字符	N	单位地址	
+isCollectPoint	数值	N	是否采集点 0否 1是	
+4.2.1.1.3.2科室主数据列表
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/dept/mdm/list
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+deptCode	字符	Y	科室代码	
+deptName	字符	Y	科室名称	
+parentDeptName	字符	Y	父级科室名称	
+deptType	字符	Y	科室类型	
+deptAttribute	字符	N	科室属性	
+outOrHospMark	字符	N	门诊住院标志	
+directorName	字符	N	科室主任姓名	
+deptTel	字符	N	科室电话号码	
+pageNumber	数值	N	页码	
+pageSize	数值	N	页大小	
+4.2.1.1.3.3卫生人员主数据列表
+接口地址
+Method	GET
+URL	https://<host>/{version}/pt/api/emp/mdm/list
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+orgName	字符	Y	机构名称	
+orgCode	字符	N	机构代码	
+deptName	字符	N	科室名称	
+employeeNo	字符	N	职工工号	
+empName	字符	N	职工姓名	
+sexCode	数值	N	性别代码	
+birthday	时间	N	出生日期	
+idcardNo	字符	N	居民身份证号	
+technicalType	字符	N	专业技术职务类别代码	
+telephone	字符	N	本人电话号码	
+pageNumber	数值	N	页码	
+pageSize	数值	N	页大小	
+4.2.1.1.4输出项
+4.2.1.1.4.1机构主数据列表
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/producer/search
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+PageData<OrgMdmInfo>	JSON	N	详见《数据结构》	
+4.2.1.1.4.2科室主数据列表
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/dept/mdm/list
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+patientMdmList	JSON	N	详见《数据结构》	
+4.2.1.1.4.3卫生人员主数据列表
+接口地址
+Method	GET
+URL	https://<host>/{version}/pt/api/emp/mdm/list
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+patientMdmList	JSON	N	详见《数据结构》	
+
+4.2.1.1.5UI设计
+
+4.2.1.1.6测试和限制条件
+4.2.1.1.6.1测试条件
+4.2.1.1.6.1.1功能测试
+测试计划：
+a)  机构、科室、卫生人员、药品、耗材、疾病、检查、检验、手术、行政区划、患者主数据页面展示正常
+b)  新增、编辑、删除、查询功能正常
+c)  数据提交审核、审核数据、发布数据、停用/启用数据功能正常，数据状态正确
+4.2.1.1.6.1.2性能测试
+测试条件：系统在用户正常使用下的响应时间和资源利用率。
+测试步骤：
+1.使用压力测试工具模拟用户在千万级数据量下访问系统。
+2.记录系统的平均响应时间、吞吐量和服务器资源利用率。
+3.分析测试结果，评估系统在高负载情况下的性能表现。
+4.2.1.1.6.2限制条件
+4.2.1.1.6.2.1技术限制
+限制条件：系统支持浏览器是IE9以上版本，chrome浏览器，火狐浏览器，360浏览器(极速模式) 。
+影响范围：用户使用其他浏览器可能无法正常访问系统。
+解决方案：向用户提供浏览器升级提示，并在系统界面中标明最佳浏览器推荐。
+4.2.1.1.6.2.2数据库限制
+限制条件：数据库连接池最大连接数为1000。
+影响范围：系统在高并发情况下可能出现数据库连接超时。
+解决方案：优化数据库查询语句，增加数据库连接池的最大连接数。
+
+4.2.1.1.7尚未解决的问题
+无。
+4.2.1.2.自定义主数据
+4.2.1.2.1功能
+1、新增自定义主数据模型。
+2、为该自定义模型新增、编辑、删除字段。
+3、为该自定义模型新增数据。
+4、自定义模型的数据提交审核。
+5、数据通过审核后发布该数据。
+6、发布数据后支持查询、停用、启用该数据
+
+4.2.1.2.2流程逻辑
+
+4.2.1.2.3输入项
+4.2.1.2.3.1新增机构数据
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/org/base
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+localOrgId	字符	Y	机构本地主键	
+rgtRegionCode	数值	Y	机构所属区划编码	
+socialCode	字符	Y	组织机构社会代码	
+orgType	字符	Y	机构类别代码	
+orgTypeName	字符	Y	机构类别名称	
+orgCode	字符	Y	机构代码	
+orgName	字符	Y	机构名称	
+orgSname	字符	N	机构第二名称	
+medLevelCode	字符	N	医疗机构等级代码	
+medLevelName	字符	N	医疗机构等级名称	
+manageType	字符	N	机构分类管理类别代码	
+manageTypeName	字符	N	机构分类管理类别名称	
+approvedType	字符	N	批准医疗定点类型代码	
+approvedTypeName	字符	N	批准医疗定点类型名称	
+parentOrgCode	字符	Y	父级机构编码	
+parentOrgName	字符	Y	父级机构名称	
+sponsorType	字符	N	主办单位类型代码	
+sponsorTypeName	字符	N	主办单位类型名称	
+relationCode	字符	N	单位隶属关系代码	
+relationName	字符	N	单位隶属关系名称	
+isTeaching	数值	N	是否教学医院	
+zoneCoords	字符	N	区域网格	
+centerCoord	字符	N	中心网格	
+orgAddrDetail	字符	N	单位地址	
+postcode	字符	N	机构邮政编码	
+fax	字符	N	单位传真	
+orgTel	字符	N	机构联系电话	
+email	字符	N	机构电子邮箱	
+dutyTel	字符	N	值班电话号码	
+reportTel	字符	N	举报电话号码	
+webName	字符	N	英文域名	
+introduction	字符	N	机构简介	
+establishDate	日期	N	机构成立日期	
+planBedNum	数值	N	编制床位数	
+primaryOrgType	字符	N	基层医疗机构类型代码	
+primaryOrgTypeName	字符	N	基层医疗机构类型名称	
+orgAddrProvince	字符	N	机构-省(自治区、直辖市)	
+orgAddrCity	字符	N	机构-市(地区、州)	
+orgAddrCounty	字符	N	机构-县(区)	
+orgAddrTown	字符	N	机构-乡（镇、街道办事处）	
+orgAddrVillage	字符	N	机构-村（街、路、弄等）	
+orgAddrDoor	字符	N	机构-门牌号码	
+orgAbbr	字符	N	机构简称	
+selfProvinceCode	字符	N	省编码-功能区	
+selfProvinceName	字符	N	省名称-功能区	
+selfCityCode	字符	N	市编码-功能区	
+selfCityName	字符	N	市名称-功能区	
+selfDistrictCode	字符	N	区县编码-功能区	
+selfDistrictName	字符	N	区县名称-功能区	
+4.2.1.1.10.2新增科室数据
+接口地址
+Method	GET
+URL	https://<host>/{version}/pt/api/dept/mdm/register
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+parentDeptCode	字符	N	上级科室编码	
+orgCode	字符	Y	卫生机构编码	
+orgName	字符	Y	卫生机构名称	
+deptCode	字符	Y	科室代码	
+deptName	字符	Y	科室名称	
+deptType	字符	Y	科室类型	
+localDeptId	字符	Y	原科室主键	
+parentDeptName	字符	N	上级科室名称	
+dataUapId	字符	Y	数据来源UAP机构主键	
+deptAbbr	字符	N	科室简称	
+outOrHospMark	字符	N	门诊住院标志	
+isLast	数值	N	是否末级	
+establishDate	时间	N	科室成立日期	
+revocationDate	时间	N	科室撤销日期	
+introduction	字符	N	科室简介	
+deptCharacteristics	字符	N	科室特色	
+deptTel	字符	N	科室电话号码	
+email	字符	N	科室电子邮箱	
+directorName	字符	N	科室主任姓名	
+directorTel	字符	N	科室主任电话号码	
+deptAttribute	字符	N	科室属性	
+deptPlanBed	数值	N	编制床位数	
+4.2.1.1.10.3新增卫生人员数据
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/emp/mdm/register
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+userCode	字符	Y	人员编码（卫生人员索引）	
+orgCode	字符	Y	卫生机构编码	
+orgName	字符	Y	卫生机构名称	
+deptCode	字符	Y	科室代码	
+deptName	字符	Y	科室名称	
+empName	字符	Y	职工姓名	
+sexCode	数值	Y	性别代码	
+birthday	时间	Y	出生日期	
+dataUapId	字符	Y	数据来源UAP机构主键	
+localEmpId	字符	Y	原卫生人员主键	
+expertNo	字符	N	远程医疗专家编号	
+ehrId	字符	N	健康档案编号	
+identityType	字符	N	其他身份证件类别代码	
+identityTypeName	字符	N	其他身份证件类别名称	
+identityNumber	字符	N	其他身份证件号码	
+nationality	字符	N	国籍代码	
+national	字符	N	民族编码	
+party	字符	N	政治面貌代码	
+marital	字符	N	婚姻状况代码	
+gbtZoneCode	数值	N	所在单位行政区划索引	
+workAddrDetail	字符	N	单位地址	
+officeTel	字符	N	办公室电话号码	
+telephone	字符	N	本人电话号码	
+email	字符	N	电子邮箱	
+graduationDate	时间	N	毕业日期	
+graduationSchool	字符	N	毕业学校	
+professional	字符	N	所学专业代码	
+education	字符	N	最高学历代码	
+degree	字符	N	最高学位代码	
+workDate	时间	N	参加工作日期	
+careerType	字符	N	职业类别代码	
+technicalType	字符	N	专业技术职务类别代码	
+titleName	字符	N	职称名称	
+titleLevel	字符	N	职称级别代码	
+aptitudeType	字符	N	人员资质类别名称	
+employeeType	字符	N	职工类别代码	
+careerStartDate	时间	N	职业开始日期	
+jobTitle	字符	N	行政/业务管理职务代码	
+jobRank	字符	N	行政职级	
+major	字符	N	专业领域	
+jobSkill	字符	N	专业特长	
+employeeStatusCode	字符	N	人员状态代码	
+employeeStatusName	字符	N	人员状态名称	
+employeeNo	字符	N	职工工号	
+updateOrgCode	字符	N	更新机构编码	
+updateOrgName	字符	N	更新机构名称	
+updateId	字符	N	更新人身份证号	
+updateName	字符	N	更新人姓名	
+sexName	字符	N	性别名称	
+nationalityName	字符	N	国籍名称	
+nationalName	字符	N	民族名称	
+partyName	字符	N	政治面貌名称	
+maritalName	字符	N	婚姻状况名称	
+professionalName	字符	N	所学专业名称	
+educationName	字符	N	最高学历名称	
+degreeName	字符	N	最高学位名称	
+careerTypeName	字符	N	职业类别名称	
+technicalTypeName	字符	N	专业技术职务类别名称	
+titleLevelName	字符	N	职称级别名称	
+titleDate	时间	N	职称取得时间	
+employeeTypeName	字符	N	职工类别名称	
+jobTitleName	字符	N	行政/业务管理职务名称	
+doctorQualificationCertCode	字符	N	医师资格证书编号	
+doctorQualificationCertDate	时间	N	医师资格证书取得时间	
+4.2.1.2.4输出项
+4.2.1.2.4.1新增机构数据
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/org/base
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+ResultData	JSON	N	详见《数据结构》	
+4.2.1.1.11.2新增科室数据
+接口地址
+Method	GET
+URL	https://<host>/{version}/pt/api/dept/mdm/register
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+ResultData	JSON	N	1、算法匹配产生主数据记录data返回详见《数据结构》2、算法匹配产生疑似记录data返回疑似记录List	
+4.2.1.1.11.3新增卫生人员数据
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/emp/mdm/register
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+ResultData	JSON	N	1、算法匹配产生主数据记录data返回详见《数据结构》2、算法匹配产生疑似记录data返回疑似记录List	
+4.2.1.2.5UI设计
+
+4.2.1.2.6测试和限制条件
+4.2.1.2.6.1测试条件
+4.2.1.2.6.1.1功能测试
+测试计划：
+a)  主数据建模页面展示正常，展示所有模型信息
+b)  可进行新增、编辑、删除自定义主数据模型
+c)  新增字段功能正常
+4.2.1.2.6.1.2性能测试
+测试条件：系统在1000个并发用户下的响应时间和资源利用率。
+测试步骤：
+1、使用压力测试工具模拟1000个用户同时访问系统。
+2、记录系统的平均响应时间、吞吐量和服务器资源利用率。
+　　3、分析测试结果，评估系统在高负载情况下的性能表现。
+4.2.1.2.6.2限制条件
+4.2.1.2.6.2.1技术限制
+限制条件：系统支持浏览器是IE9以上版本，chrome浏览器，火狐浏览器，360浏览器(极速模式) 。
+影响范围：用户使用其他浏览器可能无法正常访问系统。
+解决方案：向用户提供浏览器升级提示，并在系统界面中标明最佳浏览器推荐。
+4.2.1.2.6.2.2数据库限制
+限制条件：数据库连接池最大连接数为1000。
+影响范围：系统在高并发情况下可能出现数据库连接超时。
+解决方案：优化数据库查询语句，增加数据库连接池的最大连接数。
+
+4.2.1.2.7尚未解决的问题
+无。
+
+4.2.1.3.主数据管理
+4.2.1.3.1功能
+1、新增草稿状态数据。
+2、草稿数据提交审核。
+
+
+4.2.1.3.2流程逻辑
+
+4.2.1.3.3输入项
+4.2.1.3.3.1机构药品注册
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/drug/business/register
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+localDrugId	字符	Y	源系统药品ID	
+dataDomainCode	字符	N	数据域编码	
+dataUapId	字符	Y	数据来源UAP机构主键	
+localDrugCode	字符	Y	机构药品编码	
+drugName	字符	Y	机构药品名称	
+drugSpec	字符	N	注册规格	
+manufacturerName	字符	N	生产企业名称	
+drugFormName	字符	N	注册剂型名称	
+miniPackNum	数值	N	最小包装数量	
+drugType	字符	N	药品类别代码	
+drugTypeName	字符	N	药品类别名称	
+drugNatureCode	字符	N	药品性质代码	
+drugNatureName	字符	N	药品性质名称	
+pharmacologyType	字符	N	药理分类编码	
+pharmacologyTypeName	字符	N	药理分类名称	
+drugAtcCode	字符	N	ATC分类编码	
+drugAtcName	字符	N	ATC分类名称	
+fullSpellCode	字符	N	名称拼音全拼码	
+spellCode	字符	N	名称拼音首拼	
+wbCode	字符	N	名称五笔码	
+shortcutCode	字符	N	快捷码	
+tradeCnName	字符	N	商品名称（中文）	
+tradeEnName	字符	N	商品名称（英文）	
+genericName	字符	N	通用名称	
+chemicalName	字符	N	化学名称	
+enName	字符	N	英文名称	
+drugFormCode	字符	N	注册剂型代码	
+enabled	数值	N	启用状态	
+drugPackMaterials	字符	N	包装材质	
+drugPackSpec	字符	N	包装规格	
+drugPackTransition	数值	N	包装转换比	
+miniPackPreparationCode	字符	N	最小制剂单位代码	
+miniPackPreparationName	字符	N	最小制剂单位名称	
+minDosage	数值	N	最小剂量	
+minDosageUnitCode	字符	N	最小剂量单位代码	
+minDosageUnitName	字符	N	最小剂量单位名称	
+miniPackUnitCode	字符	N	最小包装单位代码	
+miniPackUnitName	字符	N	最小包装单位名称	
+manufacturerCode	字符	N	生产企业编码	
+manufacturerNationCode	字符	N	生产企业国别代码	
+manufacturerNationName	字符	N	生产企业国别名称	
+manufacturerAddr	字符	N	生产地址	
+barCode	字符	N	商品条形码	
+approveNum	字符	N	批准文号	
+approveDate	日期	N	批准日期	
+registrationNum	字符	N	注册证号	
+registrationDate	日期	N	注册日期	
+importFlag	数值	N	是否进口	
+standCode	字符	N	药品本位码	
+standCodeRemark	字符	N	药品本位码备注	
+insuranceFlag	数值	N	是否为医保目录标识	
+insuranceCategoryCode	字符	N	医保药品类别编码	
+insuranceCategoryName	字符	N	医保药品类别名称	
+insuranceNum	字符	N	医保药物编码	
+insuranceDrugName	字符	N	医保药物名称	
+insuranceFormType	字符	N	医保剂型分类代码	
+insuranceFormTypeName	字符	N	医保剂型分类名称	
+insuranceInfo	字符	N	医保信息备注	
+timeLimitNum	数值	N	药品有效期限	
+timeLimitUnitCode	字符	N	药品有效期限编码	
+timeLimitUnitName	字符	N	药品有效期限单位	
+execStandard	字符	N	执行标准	
+storageConditionCode	字符	N	贮藏方式代码	
+storageConditionName	字符	N	贮藏方式名称	
+otcFlag	数值	N	OTC标识	
+essentialDrugFlag	数值	N	基药标识	
+antiDrugMarkCode	字符	N	抗菌药物标识代码	
+antiDrugMarkName	字符	N	抗菌药物标识名称	
+antiDrugType	字符	N	抗菌药物分类代码	
+antiDrugTypeName	字符	N	抗菌药物分类名称	
+antiDrugLevelCode	字符	N	抗菌药物等级代码	
+antiDrugLevelName	字符	N	抗菌药物等级名称	
+gmpFlag	数值	N	是否为GMP标识	
+selfManufactureFlag	数值	N	是否为自制标识	
+allergyTestFlag	数值	N	是否为试敏标识	
+specialDrugFlag	数值	N	是否为特殊药标识	
+vitaminFlag	数值	N	是否为维生素标识	
+hormoneDrugFlag	数值	N	是否为激素药标识	
+defaultUsageCode	字符	N	默认用法代码	
+defaultUsageName	字符	N	默认用法名称	
+defaultFrequencyCode	字符	N	默认频次代码	
+defaultFrequencyName	字符	N	默认频次名称	
+outpatientMaxCourse	数值	N	门诊最大疗程(天)	
+instructionsId	字符	N	说明书id	
+drugSupervisionCode	字符	N	药监码	
+highAlertFlag	数值	N	是否为高警示标识	
+biddingFlag	数值	N	是否为招标标识	
+newDrugFlag	数值	N	是否为新药标识	
+lackDrugFlag	数值	N	是否为缺药标识	
+skinTestFlag	数值	N	是否为皮试标识	
+nationalCatalogCode	字符	N	国家医保目录代码	
+nationalCatalogName	字符	N	国家医保目录名称	
+mah	字符	N	上市许可持有人	
+4.2.1.1.17.2机构耗材注册
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/material/business/register
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+localMaterialId	字符	Y	源系统机构耗材ID	
+dataDomainCode	字符	N	数据域编码	
+dataUapId	字符	Y	数据来源UAP机构主键	
+localMaterialCode	字符	Y	机构耗材编码	
+materialName	字符	Y	机构耗材名称	
+materialTypeCode	字符	N	耗材类别编码	
+materialTypeName	字符	N	耗材类别名称	
+manufacturerName	字符	Y	生产厂家名称	
+manufacturerCode	字符	N	生产厂家编码	
+materialModel	字符	Y	耗材型号	
+materialSpec	字符	Y	耗材规格	
+enabled	数值	N	启用状态	
+registrationNum	字符	N	注册证号	
+importFlag	数值	N	是否进口	
+productCode	字符	N	产品编码	
+materialCategoryCode	字符	N	医保医用耗材-一级分类编码	
+materialCategoryName	字符	N	医保医用耗材-一级分类名称	
+materialPurposeCode	字符	N	医保医用耗材-二级分类编码	
+materialPurposeName	字符	N	医保医用耗材-二级分类名称	
+materialFunctionCode	字符	N	医保医用耗材-三级分类编码	
+materialFunctionName	字符	N	医保医用耗材-三级分类名称	
+commonName	字符	N	通用名称	
+materialOtherName	字符	N	耗材别名	
+materialGoods	字符	N	耗材材质	
+materialBrand	字符	N	耗材品牌	
+materialBarCode	字符	N	条形码	
+implantMaterialFlag	数值	N	植入性耗材标志	
+interventionMaterialFlag	数值	N	介入性耗材标志	
+registrantName	字符	N	注册人名称	
+registrantAddress	字符	N	注册人地址	
+approveDate	日期	N	注册证号批准日期	
+expireDate	日期	N	注册证号截止日期	
+manufacturerAddr	字符	N	生产地址	
+materialMiniUnitName	字符	N	最小计量单位名称	
+materialMiniUnitCode	字符	N	最小计量单位编码	
+materialMiniPackName	字符	N	最小包装单位名称	
+materialMiniPackCode	字符	N	最小包装单位编码	
+materialPackSpec	字符	N	包装规格	
+materialPackTransitionRatio	字符	N	包装转换比	
+materialPackQuality	字符	N	包装材质	
+storeConditionName	字符	N	贮藏方式名称	
+storeConditionCode	字符	N	贮藏方式编码	
+scopeApplication	字符	N	适用范围	
+useRange	字符	N	使用范围	
+timeLimitData	字符	N	使用有效期	
+timeLimitName	字符	N	使用有效期限单位名称	
+timeLimitCode	字符	N	使用有效期限单位代码	
+fullSpellCode	字符	N	名称拼音全拼码	
+spellCode	字符	N	名称拼音首拼	
+wbCode	字符	N	名称五笔码	
+shortcutCode	字符	N	快捷码	
+4.2.1.1.17.3新增患者注册
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/patient/mdm/register
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+localPatientId	字符	Y	源系统患者ID	
+dataUapId	字符	Y	数据来源UAP机构主键	
+hisPatientId	字符	N	HIS系统患者ID	
+patientName	字符	Y	姓名	
+sexCode	数值	Y	性别	
+sexName	字符	Y	性别名称	
+birthday	时间	Y	出生日期	
+residentIdCard	字符	N	居民身份证号	
+livingAddrDetail	字符	N	现住地详细地址	
+ehrId	字符	N	城乡居民健康档案编号	
+identityTypeCode	字符	N	其他身份证件类别代码	
+otherIdCard	字符	N	其他身份证件编号	
+healthCard	字符	N	居民健康卡号	
+insuranceCard	字符	N	医保卡号	
+medicalCardType	字符	N	就医卡证类别代码	
+medicalCard	字符	N	其他就医卡证号码	
+passport	字符	N	护照号	
+immuneCard	字符	N	患者接种证号	
+ruralCard	字符	N	新农合号	
+deathDate	时间	N	死亡日期	
+nationality	字符	N	国籍代码	
+ethnicity	字符	N	民族代码	
+maritalStatus	字符	N	婚姻状况代码	
+weddingDate	时间	N	结婚日期	
+obstetricalMark	数值	N	育子/女标志	
+careerType	字符	N	职业类别代码	
+careerStartDate	时间	N	职业开始日期	
+careerEndDate	时间	N	职业终止日期	
+bloodAbo	数值	N	ABO血型代码	
+bloodRh	数值	N	RH血型代码	
+economicStatus	数值	N	经济状况代码	
+insuranceType	字符	N	医疗保险类别代码	
+insuranceName	字符	N	医疗保险类别名称	
+reliefSource	字符	N	医疗补(救)助来源代码	
+medicalPayWay	字符	N	医疗费用支付方式代码	
+company	字符	N	现工作单位名称	
+workAddrDetail	字符	N	现工作单位地址	
+workRegionCode	数值	N	现工作单位行政区划索引	
+telephone	字符	N	本人电话号码	
+email	字符	N	电子邮箱	
+wechat	字符	N	微信号	
+educationCode	字符	N	学历代码	
+educationName	字符	N	学历名称	
+photoUrl	字符	N	照片	
+contactRelationCode	字符	N	紧急联系人关系	
+contactName	字符	N	紧急联系人姓名	
+contactTel	字符	N	紧急联系人电话号码	
+contactAddrDetail	字符	N	紧急联系人地址	
+residentMark	数值	N	常住户籍类型	
+livingRegionCode	数值	N	现住地行政区划索引	
+livingPostcode	字符	N	现住地邮政编码	
+guardianRelationCode	字符	N	监护人与本人关系	
+guardianId	字符	N	监护人身份证号	
+guardianName	字符	N	监护人姓名	
+guardianAge	数值	N	监护人年龄	
+guardianNationality	字符	N	监护人国籍代码	
+guardianEthnicity	字符	N	监护人民族代码	
+guardianTelephone	字符	N	监护人联系电话	
+updateOrgCode	字符	N	更新机构编码	
+updateOrgName	字符	N	更新机构名称	
+updateId	字符	N	更新人身份证号	
+updateName	字符	N	更新人姓名	
+fiveGuaranteesFlag	数值	N	五保户标识 	
+chronicDiseaseFlag	数值	N	慢性病标识	
+nativePlace	字符	N	籍贯	
+identityTypeName	字符	N	身份证件类别名称	
+medicalCardTypeName	字符	N	就医卡证类别名称	
+nationalityName	字符	N	国籍名称	
+ethnicityName	字符	N	民族名称	
+maritalName	字符	N	婚姻状况名称	
+careerName	字符	N	职业类别名称	
+bloodAboName	字符	N	ABO血型名称	
+bloodRhName	字符	N	RH血型名称	
+economicName	字符	N	经济状况名称	
+reliefSourceName	字符	N	医疗补(救)助来源名称	
+medicalPayName	字符	N	医疗费用支付方式名称	
+contactRelationName	字符	N	紧急联系人关系名称	
+guardianRelationName	字符	N	监护人与本人关系名称	
+guardianNationalityName	字符	N	监护人国籍名称	
+guardianEthnicityName	字符	N	监护人民族名称	
+workAddrProvince	字符	N	工作单位地址-省（自治区、直辖市）	
+workAddrCity	字符	N	工作单位地址 -市（地区、州））	
+workAddrDistrict	字符	N	工作单位地址-县 （区）	
+workAddrTown	字符	N	工作单位地址 -乡（镇、街道办事处）	
+workAddrVillage	字符	N	工作单位地址-村（街、路、弄等）	
+workAddrDoor	字符	N	工作单位地址-门牌号码	
+contactAddrProvince	字符	N	紧急联系人-省(自治区、直辖市)	
+contactAddrCity	字符	N	紧急联系人-市(地区、州)	
+contactAddrCounty	字符	N	紧急联系人-县(区)	
+contactAddrTown	字符	N	紧急联系人-乡（镇、街道办事处）	
+contactAddrVillage	字符	N	紧急联系人-村（街、路、弄等）	
+contactAddrDoor	字符	N	紧急联系人-门牌号码	
+livingAddrProvince	字符	N	现住地-省(自治区、直辖市)	
+livingAddrCity	字符	N	现住地-市(地区、州)	
+livingAddrCounty	字符	N	现住地-县(区)	
+livingAddrTown	字符	N	现住址-乡（镇、街道办事处）	
+livingAddrVillage	字符	N	现住址-村（街、路、弄等）	
+livingAddrDoor	字符	N	现住址-门牌号码	
+collectionDatetime	时间	N	采集时间	
+registeredAddrProvince	字符	N	户口地址-省	
+registeredAddrCity	字符	N	户口地址-市	
+registeredAddrDistrict	字符	N	户口地址-区	
+registeredAddrTown	字符	N	户口地址-乡、镇或城市的街道办事处名称	
+registeredAddrDetail	字符	N	户口地址-详细地址	
+registeredPostcode	字符	N	户口地址-邮政编码	
+collectionRegionCode	字符	N	所属机构的行政区划代码	
+collectionOrgCode	字符	N	所属机构编码	
+collectionOrgName	字符	N	所属机构名称	
+registeredAddrVillage	字符	N	户口地址-村	
+4.2.1.1.17.4人工审核新增
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/patient/mdm/add
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+newPatient	布尔值	Y	是否新患者。true 表示不选择疑似患者，直接新建一个主索引；false 表示与选中的疑似患者建立映射。	
+leftRecordId	数值	N	左记录主键（newPatient为false时必填）	
+rightRecordId	数值	N	右记录主键（newPatient为false时必填）	
+localPatientId	字符	N	源系统患者ID（newPatient为true时必填）	
+dataUapId	字符	Y	数据来源UAP机构主键（newPatient为true时必填）	
+4.2.1.3.4输出项
+4.2.1.3.4.1机构药品注册
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/drug/business/register
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+ResultData	JSON	N	code 字段：
+200 表示确认结果，返回。	
+4.2.1.1.18.2机构耗材注册
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/material/business/register
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+ResultData	JSON		code 字段：
+200 表示确认结果，返回。	
+4.2.1.1.18.3新增患者注册
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/patient/mdm/register
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+ResultData	JSON	N	code 字段：
+200 表示确认结果，返回 EMPI ID；
+300 表示疑似结果，返回数据结构如下。	
+4.2.1.1.18.4人工审核新增
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/patient/mdm/add
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+ResultData	JSON	N	详见《数据结构》	
+4.2.1.3.5UI设计
+
+4.2.1.3.6测试和限制条件
+4.2.1.3.6.1测试条件
+4.2.1.3.6.1.1功能测试
+测试计划：
+a)  数据列表页面展示正常，展示数据信息
+b)  可进行新增、编辑、删除。
+c)  数据提交审核、一键审核功能正常。
+
+4.2.1.1.20.1.2性能测试
+测试条件：系统在1000个并发用户下的响应时间和资源利用率。
+测试步骤：
+使用压力测试工具模拟1000个用户同时访问系统。
+记录系统的平均响应时间、吞吐量和服务器资源利用率。
+分析测试结果，评估系统在高负载情况下的性能表现。
+4.2.1.1.20.2限制条件
+4.2.1.1.20.2.1技术限制
+限制条件：系统支持浏览器是IE9以上版本，chrome浏览器，火狐浏览器，360浏览器(极速模式) 。
+影响范围：用户使用其他浏览器可能无法正常访问系统。
+解决方案：向用户提供浏览器升级提示，并在系统界面中标明最佳浏览器推荐。
+4.2.1.1.20.2.2数据库限制
+限制条件：数据库连接池最大连接数为1000。
+影响范围：系统在高并发情况下可能出现数据库连接超时。
+解决方案：优化数据库查询语句，增加数据库连接池的最大连接数。
+
+4.2.1.3.7尚未解决的问题
+无。
+4.2.1.4.主数据发布
+4.2.1.4.1功能
+　　　发布数据，【主数据查询】中对已发布的数据做停用和启用操作。
+
+4.2.1.4.2流程逻辑
+
+4.2.1.4.3输入项
+4.2.1.4.3.1科室信息更新
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/dept/mdm/update
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+parentDeptCode	字符	Y	上级科室编码	
+orgCode	字符	Y	卫生机构编码	
+orgName	字符	Y	卫生机构名称	
+deptCode	字符	Y	科室代码	
+deptName	字符	Y	科室名称	
+deptType	字符	Y	科室类型	
+localDeptId	字符	Y	原科室主键	
+parentDeptName	字符	Y	上级科室名称	
+dataUapId	字符	Y	数据来源UAP机构主键	
+deptAbbr	字符	N	科室简称	
+outOrHospMark	字符	N	门诊住院标志	
+isLast	数值	N	是否末级	
+establishDate	时间	N	科室成立日期	
+revocationDate	时间	N	科室撤销日期	
+introduction	字符	N	科室简介	
+deptCharacteristics	字符	N	科室特色	
+deptTel	字符	N	科室电话号码	
+email	字符	N	科室电子邮箱	
+directorName	字符	N	科室主任姓名	
+directorTel	字符	N	科室主任电话号码	
+deptAttribute	字符	N	科室属性	
+deptPlanBed	数值	N	编制床位数	
+4.2.1.4.3.2卫生人员信息更新
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/emp/mdm/update
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+userCode	字符	Y	人员编码（卫生人员索引）	
+orgCode	字符	Y	卫生机构编码	
+orgName	字符	Y	卫生机构名称	
+deptCode	字符	Y	科室代码	
+deptName	字符	Y	科室名称	
+empName	字符	Y	职工姓名	
+sexCode	数值	Y	性别代码	
+birthday	时间	Y	出生日期	
+dataUapId	字符	Y	数据来源UAP机构主键	
+expertNo	字符	N	远程医疗专家编号	
+ehrId	字符	N	健康档案编号	
+identityType	字符	N	其他身份证件类别代码	
+identityTypeName	字符	N	其他身份证件类别名称	
+identityNumber	字符	N	其他身份证件号码	
+nationality	字符	N	国籍代码	
+national	字符	N	民族编码	
+party	字符	N	政治面貌代码	
+marital	字符	N	婚姻状况代码	
+gbtZoneCode	数值	N	所在单位行政区划索引	
+workAddrDetail	字符	N	单位地址	
+officeTel	字符	N	办公室电话号码	
+telephone	字符	N	本人电话号码	
+email	字符	N	电子邮箱	
+graduationDate	时间	N	毕业日期	
+graduationSchool	字符	N	毕业学校	
+professional	字符	N	所学专业代码	
+education	字符	N	最高学历代码	
+degree	字符	N	最高学位代码	
+workDate	时间	N	参加工作日期	
+careerType	字符	N	职业类别代码	
+technicalType	字符	N	专业技术职务类别代码	
+titleName	字符	N	职称名称	
+titleLevel	字符	N	职称级别代码	
+aptitudeType	字符	N	人员资质类别名称	
+employeeType	字符	N	职工类别代码	
+careerStartDate	时间	N	职业开始日期	
+jobTitle	字符	N	行政/业务管理职务代码	
+jobRank	字符	N	行政职级	
+major	字符	N	专业领域	
+jobSkill	字符	N	专业特长	
+employeeStatusCode	字符	N	人员状态代码	
+employeeStatusName	字符	N	人员状态名称	
+employeeNo	字符	N	职工工号	
+updateOrgCode	字符	N	更新机构编码	
+updateOrgName	字符	N	更新机构名称	
+updateId	字符	N	更新人身份证号	
+updateName	字符	N	更新人姓名	
+localEmpId	字符	Y	原卫生人员主键	
+sexName	字符	N	性别名称	
+nationalityName	字符	N	国籍名称	
+nationalName	字符	N	民族名称	
+partyName	字符	N	政治面貌名称	
+maritalName	字符	N	婚姻状况名称	
+professionalName	字符	N	所学专业名称	
+educationName	字符	N	最高学历名称	
+degreeName	字符	N	最高学位名称	
+careerTypeName	字符	N	职业类别名称	
+technicalTypeName	字符	N	专业技术职务类别名称	
+titleLevelName	字符	N	职称级别名称	
+titleDate	时间	N	职称取得时间	
+employeeTypeName	字符	N	职工类别名称	
+jobTitleName	字符	N	行政/业务管理职务名称	
+doctorQualificationCertCode	字符	N	医师资格证书编号	
+doctorQualificationCertDate	时间	N	医师资格证书取得时间	
+4.2.1.4.3.3患者信息更新
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/patient/mdm/update
+Content-Type	application/json
+输入参数
+参数名	类型	是否必须	说明	示例
+localPatientId	字符	Y	源系统患者ID	
+dataUapId	字符	Y	数据来源UAP机构主键	
+hisPatientId	字符	N	HIS系统患者ID	
+patientName	字符	Y	姓名	
+sexCode	数值	Y	性别	
+sexName	字符	Y	性别名称	
+birthday	时间	Y	出生日期	
+residentIdCard	字符	N	居民身份证号	
+livingAddrDetail	字符	N	现住地详细地址	
+ehrId	字符	N	城乡居民健康档案编号	
+identityTypeCode	字符	N	其他身份证件类别代码	
+otherIdCard	字符	N	其他身份证件编号	
+healthCard	字符	N	居民健康卡号	
+insuranceCard	字符	N	医保卡号	
+medicalCardType;	字符	N	就医卡证类别代码	
+medicalCard	字符	N	其他就医卡证号码	
+passport	字符	N	护照号	
+immuneCard	字符	N	患者接种证号	
+ruralCard	字符	N	新农合号	
+deathDate	时间	N	死亡日期	
+nationality	字符	N	国籍代码	
+ethnicity	字符	N	民族代码	
+maritalStatus	字符	N	婚姻状况代码	
+weddingDate	时间	N	结婚日期	
+obstetricalMark	数值	N	育子/女标志	
+careerType	字符	N	职业类别代码	
+careerStartDate	时间	N	职业开始日期	
+careerEndDate	时间	N	职业终止日期	
+bloodAbo	数值	N	ABO血型代码	
+bloodRh	数值	N	RH血型代码	
+economicStatus	数值	N	经济状况代码	
+insuranceType	字符	N	医疗保险类别代码	
+insuranceName	字符	N	医疗保险类别名称	
+reliefSource	字符	N	医疗补(救)助来源代码	
+medicalPayWay	字符	N	医疗费用支付方式代码	
+company	字符	N	现工作单位名称	
+workAddrDetail	字符	N	现工作单位地址	
+workRegionCode	数值	N	现工作单位行政区划索引	
+telephone	字符	N	本人电话号码	
+email	字符	N	电子邮箱	
+wechat	字符	N	微信号	
+educationCode	字符	N	学历代码	
+educationName	字符	N	学历名称	
+photoUrl	字符	N	照片	
+contactRelationCode	字符	N	紧急联系人关系	
+contactName	字符	N	紧急联系人姓名	
+contactTel	字符	N	紧急联系人电话号码	
+contactAddrDetail	字符	N	紧急联系人地址	
+residentMark	数值	N	常住户籍类型	
+livingRegionCode	数值	N	现住地行政区划索引	
+livingPostcode	字符	N	现住地邮政编码	
+guardianRelationCode	字符	N	监护人与本人关系	
+guardianId	字符	N	监护人身份证号	
+guardianName	字符	N	监护人姓名	
+guardianAge	数值	N	监护人年龄	
+guardianNationality	字符	N	监护人国籍代码	
+guardianEthnicity	字符	N	监护人民族代码	
+guardianTelephone	字符	N	监护人联系电话	
+updateOrgCode	字符	N	更新机构编码	
+updateOrgName	字符	N	更新机构名称	
+updateId	字符	N	更新人身份证号	
+updateName	字符	N	更新人姓名	
+fiveGuaranteesFlag	数值	N	五保户标识 	
+chronicDiseaseFlag	数值	N	慢性病标识	
+nativePlace	字符	N	籍贯	
+identityTypeName	字符	N	身份证件类别名称	
+medicalCardTypeName	字符	N	就医卡证类别名称	
+nationalityName	字符	N	国籍名称	
+ethnicityName	字符	N	民族名称	
+maritalName	字符	N	婚姻状况名称	
+careerName	字符	N	职业类别名称	
+bloodAboName	字符	N	ABO血型名称	
+bloodRhName	字符	N	RH血型名称	
+economicName	字符	N	经济状况名称	
+reliefSourceName	字符	N	医疗补(救)助来源名称	
+medicalPayName	字符	N	医疗费用支付方式名称	
+contactRelationName	字符	N	紧急联系人关系名称	
+guardianRelationName	字符	N	监护人与本人关系名称	
+guardianNationalityName	字符	N	监护人国籍名称	
+guardianEthnicityName	字符	N	监护人民族名称	
+workAddrProvince	字符	N	工作单位地址-省（自治区、直辖市）	
+workAddrCity	字符	N	工作单位地址 -市（地区、州））	
+workAddrDistrict	字符	N	工作单位地址-县 （区）	
+workAddrTown	字符	N	工作单位地址 -乡（镇、街道办事处）	
+workAddrVillage	字符	N	工作单位地址-村（街、路、弄等）	
+workAddrDoor	字符	N	工作单位地址-门牌号码	
+contactAddrProvince	字符	N	紧急联系人-省(自治区、直辖市)	
+contactAddrCity	字符	N	紧急联系人-市(地区、州)	
+contactAddrCounty	字符	N	紧急联系人-县(区)	
+contactAddrTown	字符	N	紧急联系人-乡（镇、街道办事处）	
+contactAddrVillage	字符	N	紧急联系人-村（街、路、弄等）	
+contactAddrDoor	字符	N	紧急联系人-门牌号码	
+livingAddrProvince	字符	N	现住地-省(自治区、直辖市)	
+livingAddrCity	字符	N	现住地-市(地区、州)	
+livingAddrCounty	字符	N	现住地-县(区)	
+livingAddrTown	字符	N	现住址-乡（镇、街道办事处）	
+livingAddrVillage	字符	N	现住址-村（街、路、弄等）	
+livingAddrDoor	字符	N	现住址-门牌号码	
+collectionDatetime	时间	N	采集时间	
+registeredAddrProvince	字符	N	户口地址-省	
+registeredAddrCity	字符	N	户口地址-市	
+registeredAddrDistrict	字符	N	户口地址-区	
+registeredAddrTown	字符	N	户口地址-乡、镇或城市的街道办事处名称	
+registeredAddrDetail	字符	N	户口地址-详细地址	
+registeredPostcode	字符	N	户口地址-邮政编码	
+collectionRegionCode	字符	N	所属机构的行政区划代码	
+collectionOrgCode	字符	N	所属机构编码	
+collectionOrgName	字符	N	所属机构名称	
+registeredAddrVillage	字符	N	户口地址-村	
+4.2.1.4.4输出项
+4.2.1.4.4.1科室信息更新
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/dept/mdm/update
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+ResultData	JSON	N	详见《数据结构》	
+4.2.1.4.4.2卫生人员信息更新
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/emp/mdm/update
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+ResultData	JSON	N	详见《数据结构》	
+
+4.2.1.4.4.3患者信息更新
+接口地址
+Method	POST
+URL	https://<host>/{version}/pt/api/patient/mdm/update
+Content-Type	application/json
+输出参数
+参数名	类型	是否必须	说明	示例
+ResultData	JSON	N	详见《数据结构》	
+
+4.2.1.4.5UI设计
+
+4.2.1.4.6测试和限制条件
+4.2.1.4.6.1测试条件
+4.2.1.4.6.1.1功能测试
+测试计划：
+a)  发布、查询页面展示正常
+b)  发布数据、停用数据、启用数据功能正常
+c)  数据状态显示正确。
+
+4.2.1.4.6.1.2性能测试
+测试条件：系统在1000个并发用户下的响应时间和资源利用率。
+测试步骤：
+1、使用压力测试工具模拟1000个用户同时访问系统。
+2、记录系统的平均响应时间、吞吐量和服务器资源利用率。
+3、分析测试结果，评估系统在高负载情况下的性能表现。
+4.2.1.4.6.2限制条件
+4.2.1.4.6.2.1技术限制
+限制条件：系统支持浏览器是IE9以上版本，chrome浏览器，火狐浏览器，360浏览器(极速模式) 。
+影响范围：用户使用其他浏览器可能无法正常访问系统。
+解决方案：向用户提供浏览器升级提示，并在系统界面中标明最佳浏览器推荐。
+4.2.1.4.6.2.2数据库限制
+限制条件：数据库连接池最大连接数为1000。
+影响范围：系统在高并发情况下可能出现数据库连接超时。
+解决方案：优化数据库查询语句，增加数据库连接池的最大连接数。
+
+4.2.1.4.7尚未解决的问题
+无。
+4.2.2.主索引管理子系统图
+4.2.2.1.患者主索引管理模块详细设计
+4.2.2.1.1.业务场景分析
+　　　患者主索引管理功能发挥着关键作用。主索引系统部署成功后，交付实施人员需进行一系列操作以保障患者信息的准确管理。例如，在数据处理方面，通过配置患者数据清洗规则，可在执行算法前对患者基本信息字段进行清洗，利用正则表达式等方式确保数据质量；管理患者匹配算法模型，对患者基本字段、自定义字段、模型分区及匹配规则进行配置和维护，实现患者信息的精准匹配。在实际业务中，各业务系统的患者信息需同步至主索引管理系统，通过患者信息注册接口完成主索引生成，建立患者数据的关联关系。交付实施人员可通过多种条件筛选患者信息，查看患者详情及匹配情况，并进行对比分析。当患者匹配状态更新时，系统自动同步相关统计信息。此外，还能进行显示字段配置、人工拆分已匹配患者并生成新主索引等操作，以满足不同业务需求，确保在多域或跨域环境中患者实例的唯一性和数据的一致性、准确性。
+4.2.2.1.2.业务层
+4.2.2.1.2.1.时序图
+
+4.2.2.1.2.2.实体模型
+
+4.2.2.1.3.功能设计
+4.2.2.1.3.1.页面名称
+　　　查看路径：系统登录——主索引管理系统——患者主索引管理
+　　　
+4.2.2.1.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　医疗患者信息管理
+　　　2	　　　数据清洗与算法管理
+　　　3	　　　主索引相关操作
+　　　4	　　　数据统计与分析
+　　　表 业务范围
+　　　2）功能描述：
+?1. 数据清洗规则配置：打开配置页面，可新增字段（选取清洗字段和函数）、新增规则（输入规则名、选取类型与用途）、编辑规则、删除规则（需二次确认），配置后清洗规则生效。
+?2. 算法模型管理：打开配置页面，配置患者基本字段、自定义字段、模型分区（新增分区并设主分区）及匹配规则（支持权重计算、规则详情查看、算法执行等），支持对各配置项的编辑、删除操作，配置后算法模型生效。
+?3. 主索引管理与统计：通过接口注册患者主索引，支持按省、市、县区、机构名称等条件查询筛选患者信息，筛选条件包括身份证号、医保卡号等；点击患者详情可查看主索引字段（部分字段脱敏），点击项目患者信息可联动展示映射的标准患者信息；对比不同患者数据，根据匹配状态展示相应操作选项；匹配状态更新时同步更新统计信息；可进行显示字段配置；人工拆分已匹配患者后可生成新主索引。
+4.2.2.2.机构主索引管理模块详细设计
+4.2.2.2.1.业务场景分析
+　　　患者主索引管理功能发挥着关键作用。主索引系统部署成功后，交付实施人员需进行一系列操作以保障患者信息的准确管理。例如，在数据处理方面，通过配置患者数据清洗规则，可在执行算法前对患者基本信息字段进行清洗，利用正则表达式等方式确保数据质量；管理患者匹配算法模型，对患者基本字段、自定义字段、模型分区及匹配规则进行配置和维护，实现患者信息的精准匹配。在实际业务中，各业务系统的患者信息需同步至主索引管理系统，通过患者信息注册接口完成主索引生成，建立患者数据的关联关系。交付实施人员可通过多种条件筛选患者信息，查看患者详情及匹配情况，并进行对比分析。当患者匹配状态更新时，系统自动同步相关统计信息。此外，还能进行显示字段配置、人工拆分已匹配患者并生成新主索引等操作，以满足不同业务需求，确保在多域或跨域环境中患者实例的唯一性和数据的一致性、准确性。
+4.2.2.2.2.业务层
+4.2.2.2.2.1.时序图
+
+
+4.2.2.2.2.2.实体模型
+
+4.2.2.2.3.功能设计
+4.2.2.2.3.1.页面名称
+　　　查看路径：系统登录——主索引管理系统——机构主索引管理
+　　　
+4.2.2.2.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　医疗项目机构信息整合
+　　　2	　　　机构主索引生成与管理
+　　　3	　　　机构信息导入与查询
+　　　4	　　　机构信息展示配置
+　　　5	　　　机构匹配与统计
+　　　表 业务范围
+　　　2）功能描述：
+?1. 机构信息导入：将业务系统机构信息导入数据库，验证唯一键，匹配则更新，不匹配则创建新记录；可通过接口批量注册机构，也可下载模板填写后上传机构信息。
+?2. 导入结果查询：根据机构名称、导入时间范围等条件查询项目机构的导入结果。
+?3. 主索引生成与配置：按规则将机构信息整合成主索引，为机构分配唯一标识符；点击标识项配置，选择要显示的机构基本信息字段。
+?4. 主索引详情查看：点击机构，查看机构主索引详情。
+?5. 主索引合并与拆分：当两个机构为同一机构时，点击合并，指定合并顺序和保留的最佳记录；点击已匹配的机构主索引，进行拆分生成新主索引。
+?6. 算法执行与统计：点击算法执行，实现机构主索引自动匹配；展开左侧区划区域树，查看当前区域的机构主索引匹配情况统计。
+
+4.2.2.3.卫生人员主索引管理模块详细设计
+4.2.2.3.1.业务场景分析
+　　　卫生人员主索引管理功能聚焦于整合分散在各业务系统中的卫生人员信息。主索引系统部署完成后，交付实施人员需将业务系统的卫生人员数据导入，系统依据身份证号、执业资格证号等唯一键核验数据，匹配则更新记录，不匹配则新建，确保数据准确且无重复。当卫生人员离职等情况需注销管理时，可通过接口从主索引系统中移除其信息。日常工作中，能为卫生人员生成唯一标识的主索引，支持按姓名等关键词快速检索，通过配置展示字段灵活呈现人员基本信息。若出现同一人员多条记录或需拆分管理的情形，可进行主索引的合并与拆分操作，并指定保留记录。借助算法执行实现自动匹配，结合左侧区划机构树可直观查看各机构卫生人员的映射统计情况，助力跨系统间卫生人员数据的统一管理与高效共享，为医疗人力资源调配、业务协同等提供精准数据支撑。
+4.2.2.3.2.业务层
+4.2.2.3.2.1.时序图
+
+4.2.2.3.2.2.实体模型
+
+4.2.2.3.3.功能设计
+4.2.2.3.3.1.页面名称
+　　　查看路径：系统登录——主索引管理系统——卫生人员主索引管理
+　　　
+4.2.2.3.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　医疗人员信息整合
+　　　2	　　　主索引全生命周期管理
+　　　3	　　　数据检索与展示配置
+　　　4	　　　自动化匹配与统计
+　　　表 业务范围
+　　　2）功能描述：
+?1. 信息导入与同步：通过同步机制导入卫生人员数据，依唯一键校验，匹配更新、不匹配新建，保障数据与业务系统实时同步。
+?2. 注销管理：对无需管理的人员，通过接口注销其主索引信息，确保数据合规性。
+?3. 主索引生成与检索：为卫生人员分配唯一标识符，支持关键词快速检索，提升数据查询效率。
+?4. 展示配置与详情查看：点击标识项配置展示字段（如姓名、联系方式）；点击人员可查看主索引详情。
+?5. 合并与拆分操作：针对重复或需分割的人员记录，可合并主索引并指定保留记录，或拆分生成新索引。
+?6. 算法匹配与统计：执行算法自动匹配主索引；通过区划机构树展示各机构卫生人员映射统计，直观呈现人员分布与关联状态。
+4.2.2.4.药品主索引管理模块详细设计
+4.2.2.4.1.业务场景分析
+　　　药品主索引管理功能围绕着对业务系统中药品信息的整合与高效管理展开。主索引系统部署成功后，交付实施人员需要将业务系统中的药品信息注册到主索引管理子系统中。可以选择单个药品注册，提供详细信息生成唯一键并确保编码不重复；也能通过数据文件或 API 调用进行批量上传，系统会验证和处理数据，保证完整性和准确性后生成唯一键加入主索引。还可下载 Excel 模板填写后上传药品信息。对于不再需要的药品，通过接口提供唯一键或识别符进行注销，使其从系统中移除。在管理过程中，能分页查看药品导入结果，对成功和失败的信息分别列出并提供详细信息及失败原因文档下载。利用匹配算法自动生成药品主索引，同时支持手动干预修正结果。配置标识项可灵活设置药品列表展示字段，通过算法匹配标准药品，查看药品详细信息和映射情况，若映射错误可进行拆分操作。还能导出药品主索引及详细信息，对查询结果进行人工标注，通过首页报表视图查看药品映射统计情况，从而实现对药品信息的精准管理，为医疗业务中药品的使用、调配等提供准确的数据支持。
+4.2.2.4.2.业务层
+4.2.2.4.2.1.时序图
+
+4.2.2.4.2.2.实体模型
+
+4.2.2.4.3.功能设计
+4.2.2.4.3.1.页面名称
+　　　查看路径：系统登录——主索引管理系统——药品主索引管理
+
+4.2.2.4.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　医疗药品信息整合
+　　　2	　　　药品主索引生成与管理
+　　　3	　　　药品信息导入与导出
+　　　4	　　　药品信息注销
+　　　5	　　　药品信息匹配与统计
+　　　6	　　　药品信息展示配置
+　　　表 业务范围
+　　　2）功能描述：
+?1. 药品注册：单个或批量将药品信息注册到系统生成主索引，提供详细信息生成唯一键，确保编码不重复。
+?2. 导入操作：可下载模板填写上传，或通过数据文件、API 调用批量导入，系统验证处理数据，生成唯一键加入主索引。
+?3. 注销操作：通过接口提供唯一键或识别符注销药品信息，从主索引系统移除。
+?4. 导入结果查看：分页查看导入结果，分别列出成功和失败信息，提供详细信息及失败原因文档下载。
+?5. 主索引生成：使用匹配算法自动生成主索引，支持手动干预修正匹配结果。
+?6. 展示配置：点击标识项配置，设置药品列表展示的基本信息字段。
+?7. 匹配操作：通过算法将药品与标准药品匹配。
+?8. 详情查看：点击药品查看基本信息和映射情况。
+?9. 拆分操作：药品映射不正确时，拆分项目药品映射到其他标准药品。
+?10. 导出操作：导出药品主索引及详细信息。
+?11. 人工标注：对查询结果的药品进行人工标注手动映射。
+?12. 统计查看：通过首页报表视图查看药品映射统计情况。
+4.2.3.数据采集管理
+4.2.3.1.数据采集详细设计
+4.2.3.1.1.业务场景分析
+补传历史时间段数据。中心开发者通过点击补传，弹出补传数据时间范围选择，点击确认，列表新增一条补传的采集任务，需要手动执行
+
+4.2.3.1.2.业务层
+4.2.3.1.2.1.时序图
+
+4.2.3.1.2.2.类图
+
+4.2.3.1.3.功能设计
+4.2.3.1.3.1.页面名称
+查看路径：系统登录—采集平台—数据采集-任务配置。
+
+4.2.3.1.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+序号	业务范围
+1	中心开发者可对业务视图对接方式的任务，选择上传时间范围进行补传任务创建
+　　　表 业务范围
+　　　2）功能描述：
+中心开发者通过点击补传，弹出补传数据时间范围选择，点击确认，列表新增一条补传的采集任务，需要手动执行。
+4.2.3.2.数据对账详细设计
+4.2.3.2.1.业务场景分析
+中心开发者设置查询条件查看每个数据采集质控明细情况
+4.2.3.2.2.业务层
+4.2.3.2.2.1.时序图
+
+4.2.3.2.2.2.类图
+
+4.2.3.2.3.功能设计
+4.2.3.2.3.1.页面名称
+　　　查看路径：系统登录—采集平台(中心端）—采集监控-质控详情。
+
+4.2.3.2.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+序号	业务范围
+1	中心开发者查看数据采集任务质控的质量详情明细
+　　　表 业务范围
+　　　2）功能描述：
+中心开发者设置查询条件查看每个数据采集质控明细情况。
+4.2.3.3.断点续传详细设计
+4.2.3.3.1.业务场景分析
+补传历史时间段数据。中心开发者通过点击补传，弹出补传数据时间范围选择，点击确认，列表新增一条补传的采集任务，需要手动执行。
+
+4.2.3.3.2.业务层
+4.2.3.3.2.1.时序图
+
+4.2.3.3.2.2.类图
+
+4.2.3.3.3.功能设计
+4.2.3.3.3.1.页面名称
+　　　查看路径：系统登录—采集平台(中心端）—数据采集-任务配置。
+
+4.2.3.3.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+序号	业务范围
+1	中心开发者需要根据采集方案，制定相关的数据采集任务
+　　　表 业务范围
+　　　2）功能描述：
+　　　点击新增任务，选择采集方案，对接方式，选择数据抽取类型，任务调度类型，点击保存，系统提示“保存成功”，列表新增一条采集任务记录。
+4.2.3.4.医疗机构前置服务器监控详细设计
+4.2.3.4.1.业务场景分析
+数据实施人员需要查看数据采集的执行链路每个节点的运行情况。
+4.2.3.4.2.业务层
+4.2.3.4.2.1.时序图
+
+4.2.3.4.2.2.类图
+
+4.2.3.4.3.功能设计
+4.2.3.4.3.1.页面名称
+查看路径：系统登录—采集平台前置机端—数据采集—链路健康。
+
+
+4.2.3.4.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+序号	业务范围
+1	数据实施人员需要查看数据采集的执行链路每个节点的运行情况
+　　　表 业务范围
+　　　2）功能描述：
+　　数据实施人员需要查看数据采集的执行链路每个节点的运行情况。
+4.2.3.5.数据采集范围详细设计
+4.2.3.5.1.业务场景分析
+　　为满足本地区监测预警、业务分析及决策支持等需求，需广泛采集多源异构数据。本数据采集范围依据相关行业标准、技术规范确定，旨在汇聚各类关键数据，打破数据壁垒，实现数据的高效利用。采集过程遵循准确性、完整性、及时性原则，确保所采集数据能够真实、有效反映各领域实际情况。
+4.2.3.5.2.业务层
+4.2.3.5.2.1.时序图
+
+4.2.3.5.2.2.类图
+
+4.2.4.数据质量控制
+4.2.4.1. 数据质量概览详细设计
+4.2.4.1.1业务场景分析
+　　　数据质量直接影响决策的准确性和可靠性。数据质量概览功能的业务场景围绕着帮助质量管理员全面、及时了解数据质量状况展开。例如，在日常监测工作中，质量管理员需要快速掌握整体数据质量水平，以便及时发现潜在问题并采取措施。通过该功能，他们能查看规则 / 任务调度数量统计，了解数据校验的执行规模；分析数据增量发展稽查趋势，洞察数据量变化及异常情况；查看今日得分和评分分布情况，评估各机构、数据源的数据质量表现；还能查看数据质量总览和 24 小时告警，对数据质量进行实时监控，从而保障传染病监测预警工作的数据基础，为后续决策提供有力支持。
+4.2.4.1.2.业务层
+4.2.4.1.2.1.时序图
+
+4.2.4.1.2.2.实体模型
+　　　
+4.2.4.2.3.功能设计
+4.2.4.2.3.1.页面名称
+查看路径：系统登录——数据质量控制子系统。
+
+4.2.4.2.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　传染病监测数据质量评估
+　　　2	　　　传染病监测数据质量评估
+　　　3	　　　数据质量问题预警
+　　　表 业务范围
+　　　2）功能描述：
+?1. 数据统计展示：展示质控规则相关的校验规则总数、质检数据源数等统计数据，以及任务调度的昨日任务总数、成功数、失败数等情况。
+?2. 趋势分析：呈现数据增量发展趋势，包括按日期维度的稽查数据量、增量异常量等，帮助管理员把握数据量变化动态。
+?3. 得分查看：支持按机构、质控方案维度查看今日得分，以及按时间范围查看任一数据源某个质控方案的综合得分。
+?4. 评分分布分析：从机构、数据源、质控表三个维度，依据质控方案、质控账期查看各得分分数段的分布情况，评估数据质量的分布特征。
+?5. 数据质量总览：按照数据源、质控表等条件查看质控表总数、高分和低分质控表数量，并展示具体明细，如质控表名称、综合得分等。
+?6. 告警查看：展示 24 小时内任务执行异常和数据质量两类告警，支持快速查看全部告警及历史记录，方便及时处理问题。
+?7. 操作交互：通过单击不同操作按钮，如【查看综合得分】【任务执行】等，实现查看机构得分、任务执行告警、数据质量告警、告警历史记录、评分分布情况和机构得分排行等功能。
+4.2.4.2.数据质量规则管理详细设计
+4.2.4.2.1.业务场景分析
+　　　数据质量规则管理功能的业务场景主要围绕保障数据质量展开。质量管理员在日常工作中，需要确保各类数据准确、完整、符合逻辑且及时稳定地上传，以支持精准的监测和预警决策。在数据采集环节，通过配置准确性和完整性规则，对数据录入进行规范，如校验字段值域和格式、检查字段完整性与必填项等；在数据存储和处理阶段，逻辑性规则用于保证数据在表关联、约束和唯一性方面的正确性。当涉及数据上传时，及时性和稳定性规则监控机构上传数据的时效性和稳定性。指标校验规则则针对特定业务指标进行核查。质量管理员还需创建质控方案和任务，监控任务执行过程，根据日志分析结果优化调整规则和任务配置，确保整个数据处理流程的质量，为传染病监测预警提供可靠的数据支持。
+4.2.4.2.2.业务层
+4.2.4.2.2.1.时序图
+
+4.2.4.2.2.2.实体模型
+
+4.2.4.2.3.功能设计
+4.2.4.2.3.1.页面名称
+　　　查看路径：系统登录——数据质量控制子系统-校验规则配置
+
+4.2.4.2.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　传染病监测数据质量管控
+　　　2	　　　多类型规则维护
+　　　3	　　　质控方案与任务管理
+　　　4	　　　任务执行监控与优化
+　　　表 业务范围
+　　　2）功能描述：
+?1. 规则配置与管理：支持按多种条件查询质控表，对各类规则（准确性、完整性等）进行新增、导入、导出、编辑和删除操作。
+?2. 质控方案创建：提供空白版本和克隆版本两种方式创建版本号，选择版本号后填写基本信息并绑定目标质控规则，支持按多种条件快速过滤定位和批量选择规则。
+?3. 质控任务创建：分别创建数据校验任务和数据比对任务，可设置任务名称、质控方案、数据源、业务时间范围等信息，数据校验任务支持批量指定业务时间字段，时间范围支持绝对时间和相对时间设定。
+?4. 任务执行与监控：查看质控任务和数据比对任务的执行记录，包括执行时间、状态等信息，对于运行失败的任务可查看详细日志定位问题。
+?5. 异常处理与优化：根据任务执行异常情况，修改任务调度周期或质控数据范围等进行优化，数据校验任务支持对错误数据进行设置修复策略、置为例外、取消例外、修复比对等操作；数据比对任务支持补采数据操作。
+?6. 数据展示：在数据校验任务 - 质量监控和数据比对任务 - 质量监控页面展示详细的质控信息，如数据量、错误数、校验结果等。
+4.2.4.3.数据质量度量和指标详细设计
+4.2.4.3.1.业务场景分析
+　　　数据质量直接影响决策的准确性和可靠性。数据质量概览功能的业务场景围绕着帮助质量管理员全面、及时了解数据质量状况展开。例如，在日常监测工作中，质量管理员需要快速掌握整体数据质量水平，以便及时发现潜在问题并采取措施。通过该功能，他们能查看规则 / 任务调度数量统计，了解数据校验的执行规模；分析数据增量发展稽查趋势，洞察数据量变化及异常情况；查看今日得分和评分分布情况，评估各机构、数据源的数据质量表现；还能查看数据质量总览和 24 小时告警，对数据质量进行实时监控，从而保障传染病监测预警工作的数据基础，为后续决策提供有力支持。
+4.2.4.3.2.业务层
+4.2.4.3.2.1.时序图
+
+4.2.4.3.2.2.实体模型
+
+4.2.4.3.3.功能设计
+4.2.4.3.3.1.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　传染病监测数据质量评估
+　　　2	　　　传染病监测数据质量评估
+　　　3	　　　评分标准管理与维护
+　　　4	　　　评分标准管理与维护
+　　　表 业务范围
+　　　2）功能描述：
+?1.评分标准模型创建与管理：与质控方案一一对应创建评分标准模型，填写基本信息，设置表权重和规则权重，支持手动调整，系统默认按平均分原则设置初始值；评分标准模型创建成功后可进行启用、修改、删除、查询等操作，还能按质控方案版本创建对应版本的评分标准模型。
+?2. 度量结果计算与报告生成：随着质控任务执行，系统按评分规则自动计算评分结果；质量管理员可通过质控报告概览，按数据源、质控方案、账期查询数据，查看质控综合得分、各规则类型得分、得分趋势、机构排名、错误规则占比和错误趋势等信息，并生成质控报告在线下载。
+?3. 机构数据度量评分查看与导出：通过数据源、质控方案、时间过滤数据，查看机构的整体得分、各类型规则得分、质控数据量、错误数据行数、错误率等信息，并支持导出机构评分结果，方便直观了解各机构数据质量状况。
+4.2.4.3.3.2.页面名称
+　　　查看路径：系统登录——数据质量控制子系统-评分标准管理
+
+4.2.4.4.数据采样与抽样
+4.2.4.4.1.业务场景分析
+　　　数据采样与抽样功能的业务场景聚焦于高效且精准地评估数据质量。在数据量庞大的情况下，为确保质控稽查结果能全面反映数据质量状况，数据开发者和质量管理员发挥关键作用。数据开发者根据业务特性，运用随机、分层、全量或系统采集等方式开发采集脚本并创建任务，绑定质控方案后启动任务完成数据采样。质量管理员则负责在系统内配置数据源连接池信息，测试连接成功后创建质控任务，设置抽样时间范围，监控任务执行以完成数据质控。之后，质量管理员查看质控结果，从多个维度评估数据质量，如综合得分、各规则类型得分等，以此判断数据是否满足传染病监测预警的要求，及时发现数据质量问题并进行优化。
+4.2.4.4.2.业务层
+4.2.4.4.2.1.时序图
+
+4.2.4.4.2.2.实体模型
+
+4.2.4.4.3.功能设计
+4.2.4.4.3.1.页面名称
+　　　查看路径：系统登录——数据采集平台（边端）——数据集成--任务管理
+
+4.2.4.4.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　传染病监测数据质量评估辅助
+　　　2	　　　多方式数据采集
+　　　3	　　　数据质量稽查
+　　　4	　　　数据质量结果分析与应用
+　　　表 业务范围
+　　　2）功能描述：
+?1. 数据采样操作：数据开发者开发随机、分层、全量或系统采样的采集脚本，创建匹配的采集任务并绑定质控方案，启动并监控任务完成数据采集。
+?2. 数据源配置与连接测试：质量管理员在系统中配置待抽样检查的数据源连接池信息，包括数据库类型、名称、IP 等，并进行连接测试，确保数据源可正常访问。
+?3. 质控任务创建与执行：质量管理员创建质控任务，选择待质控数据源和质控方案，按 “相对时间” 设置抽样检查任务的取数业务时间范围，启动并监控任务正确执行。
+?4. 质控结果查看与分析：质量管理员查看数据采样或抽样后的质控结果，包括质控总数、通过与未通过数量、质控清单等，还可从数据源、数据表维度查看综合得分、各规则类型得分等评估结果，支持下载质控失败数据。
+4.2.4.5.数据质量异常监测详细设计
+4.2.4.5.1.业务场景分析
+　　　数据质量异常监测功能的业务场景主要围绕保障数据质量展开。质量管理员和数据开发者需要确保用于分析和决策的数据准确可靠。在日常数据处理流程中，质量管理员根据业务需求开发如指标校验类的质控规则，将其组装成质控方案并创建任务。当任务执行时，系统依据这些规则对大量的传染病监测数据进行检测。数据开发者则在任务运行后查看质控结果，了解数据的整体质量状况。质量管理员进一步通过多维度过滤查看详细数据，从机构整体得分到具体数据表的字段问题详情，层层钻取，精准定位异常数据。发现异常后进行标记，为后续的数据处理和质量提升提供明确指引，确保数据能有效支持传染病监测预警工作。
+4.2.4.5.2.业务层
+4.2.4.5.2.1.时序图
+
+4.2.4.5.2.2.实体模型
+
+4.2.4.5.3.功能设计
+4.2.4.5.3.1.页面名称
+　　　查看路径：系统登录——数据质量控制子系统-校验规则配置。
+
+4.2.4.5.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　传染病监测数据质量保障
+　　　2	　　　质控规则与方案管理
+　　　3	　　　异常数据处理与优化
+　　　表 业务范围
+　　　2）功能描述：
+?1. 质控规则与任务创建：质量管理员开发质控规则，配置校验条件和结果计算公式，将规则组装成质控方案并创建质控任务。
+?2. 异常检测执行：任务在调度执行过程中，按照预先配置的规则对数据进行异常检测。
+?3. 质控结果查看：数据开发者查看任务运行后的质控结果，包括质控总数、通过与未通过数量、质控清单等；质量管理员通过多维度过滤查看机构整体得分、各类型规则得分、质控数据量等信息。
+?4. 异常数据钻取与标记：质量管理员通过层层钻取，从机构整体数据深入到具体数据表、字段的问题详情，包括字段名、字段值、错误内容等，并对异常数据进行标记。
+?5. 特殊需求支持：校验结果计算公式支持多种计算方式，异常数据人工线下处理后可再次通过质控任务获取质量评估结果。
+4.2.4.6.数据质量报告与可视化详细设计
+4.2.4.6.1.业务场景分析
+　　　数据质量报告与可视化功能的业务场景围绕数据质量评估结果的展示与分析展开。当质控任务完成后，质量管理员急需了解数据质量状况，以便对传染病监测数据的可靠性做出判断。此时，该功能发挥关键作用，系统自动计算评分结果并生成质控报告。质量管理员可通过质控报告概览，按照多种条件查询数据，如数据源、质控方案、账期等。从综合得分、各规则类型得分，到得分趋势、机构排名，再到错误规则占比和趋势，全方位掌握数据质量情况。若发现机构数据质量指标异常，还能通过操作交互深入查看具体数据表的稽查结果，进而为优化数据质量、调整监测策略提供有力依据。
+4.2.4.6.2.业务层
+4.2.4.6.2.1.时序图
+
+4.2.4.6.2.2.实体模型
+
+4.2.4.6.3.功能设计
+4.2.4.6.3.1.页面名称
+　　　查看路径：系统登录——数据质量控制子系统
+
+4.2.4.6.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　传染病监测数据质量评估结果呈现
+　　　2	　　　多维度数据质量分析
+　　　3	　　　数据质量报告管理
+　　　4	　　　问题数据定位与深入分析
+　　　表 业务范围
+　　　2）功能描述：
+?1. 报告自动生成：质控任务完成后，系统按评分规则自动计算评分结果并生成质控报告。
+?2. 综合概览查询：在质控报告概览页面，支持按机构名称、质控方案等多种条件查询机构总体质控情况，包括综合得分、各规则类型评分、总分、质控范围、质控结果、得分趋势等，同时可对机构总分排行榜进行正序或倒序排序，并导出报告。
+?3. 机构评分查看：在机构评分页面，可按机构名称、上传时间、质控方案查询机构质控得分及错误问题情况，包括整体评分、各规则类型得分、上传数据量、错误数据行数、错误率等，还能通过点击 “查看数据表” 跳转到数据表质控详情页面，深入分析问题。
+?4. 数据导出：支持导出机构的质控报告和质控概览报告，方便数据留存与进一步分析。
+4.2.4.7.数据质量审计与跟踪详细设计
+4.2.4.7.1.业务场景分析
+　　　数据质量审计与跟踪功能的业务场景主要围绕确保数据质量的可靠性和可追溯性展开。在日常的数据处理流程中，质控任务完成后，质量管理员需要全面了解数据质量情况。通过查看数据质量审计日志，能够清晰掌握数据源下各数据表的稽查记录、任务清单以及执行日志等详细信息，以便及时发现潜在问题。当发现数据质量异常时，质量管理员可通过逐层钻取的方式，从数据表的得分情况深入到具体字段的问题详情，精准定位问题所在。同时，系统会根据预设的告警规则对质控结果进行判断，一旦出现异常事件，立即记录并产生告警，通过系统界面和邮件、企业微信等方式通知相关人员，促使其及时处理。此外，标准对照员负责管理业务码表库，进行标准库与业务码表库的映射工作，确保数据在不同系统间的一致性和准确性，为传染病监测预警提供坚实的数据基础。
+4.2.4.7.2.业务层
+4.2.4.7.2.1.时序图
+
+4.2.4.7.2.2.实体模型
+
+4.2.4.7.3.功能设计
+4.2.4.7.3.1.页面名称
+　　　查看路径：系统登录——数据质量控制子系统——基础信息配置。
+
+
+4.2.4.7.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　传染病监测数据质量审计
+　　　2	　　　数据质量问题定位与跟踪
+　　　3	　　　数据质量异常告警
+　　　4	　　　数据质量异常告警
+　　　5	　　　标准映射管理
+　　　表 业务范围
+　　　2）功能描述：
+?1. 审计日志查看：质量管理员可查看目标数据源的审计日志，包括表名、最后质量扫描时间等信息；查看数据表的质控任务清单和执行日志，包括任务类型、运行状态等；过滤查看稽查任务执行日志，包括任务名称、执行状态等，若任务失败可查看错误日志；查看单次任务执行日志详情，包括数据表名、错误行数等。
+?2. 问题定位跟踪：质量管理员可查看各数据表的具体得分情况，通过钻取方式查看问题字段和问题详情，包括字段名、错误内容等。
+?3. 异常告警处理：质量管理员创建质控任务，系统根据告警规则判断质控结果，超出阈值时记录异常事件并产生告警，质量管理员通过系统界面查看告警记录，并通过邮件或企业微信接收告警并处理。
+?4. 业务码表库管理：标准对照员可新增或导入机构值域字典、诊断代码、手术代码等业务码表，对导入的错误数据可通过界面修改、删除功能进行手动调整。
+?5. 标准映射管理：系统提供映射关系自动分析算法进行初步映射，标准对照员核对值域字典、诊断代码等，对未能成功匹配或映射错误的数据进行人工设置映射，支持对照结果统计、一键查看未对照数据和更新标准数据等功能。
+4.2.4.8.数据质量自动化详细设计
+4.2.4.8.1.业务场景分析
+　　　数据质量自动化功能的业务场景主要体现在保障数据的一致性和准确性上。在数据采集完成后，质量管理员需要确保采集到的数据符合质量标准。当面对跨源数据校验时，可能会出现数据不一致的情况，例如记录缺失或数据量不匹配等问题。此时，质量管理员通过配置自动补偿策略，为每张质控表设置对应的补偿任务并开启自动补偿功能。当系统检测到跨源校验中【记录缺失检查】规则的核对结果为 “错误”，且质控表数据量小于参照表数据量时，系统会自动按照当次质控数据的时间范围重新补采数据。补采完成后，质量管理员再刷新查看数据条数比对结果，从而保证数据的一致性。若未提前配置自动补偿策略，也可手动选择补偿任务来快速补偿数据，以满足传染病监测预警对数据质量的严格要求。
+4.2.4.8.2.业务层
+4.2.4.8.2.1.时序图
+
+4.2.4.8.2.2.实体模型
+
+4.2.4.8.3.功能设计
+4.2.4.8.3.1.页面名称
+　　　查看路径：系统登录——数据质量控制子系统——任务监控告警。
+
+4.2.4.8.3.2.功能描述
+　　1）该功能模块涉及到的业务范围如下：
+　　　序号	　　　业务范围
+　　　1	　　　传染病监测数据质量保障
+　　　2	　　　数据一致性处理
+　　　3	　　　自动策略配置与管理
+　　　表 业务范围
+　　　2）功能描述：
+?1. 自动补偿策略配置：质量管理员创建质控数据源后，为每张质控表设置自动补偿策略，选择对应的补偿任务并开启自动补偿功能。
+?2. 自动数据补采：当跨源校验中【记录缺失检查】规则的核对结果为 “错误”，且质控表数据量小于参照表数据量时，系统自动按照当次质控数据的时间范围重新补采数据。
+?3. 结果刷新与确认：数据补采后，质量管理员重新刷新查看数据条数比对结果，确认数据的一致性。
+?4. 手动补偿支持：如未配置自动补偿策略，系统支持手动选择补偿任务，快速补偿数据，以应对不同的业务需求和数据质量问题。
+
+4.3.监管中心
+4.3.1综合监管系统
+4.3.1.1.指标可视化管理系统
+4.3.1.1.1功能描述
+序号	模块名称	功能名称	功能描述
+1	业务域管理	业务域信息管理	　　　提供各个业务域基础信息的维护和管理，便于对指标体系进行按领域划分
+2		监管体系信息管理	　　　提供各个监管标准、规范、体系等的基础信息的维护和管理，便于对各个监管体系、监管标准、考核体系等指标体系进行按应用体系划分
+3	指标管理	指标分类信息管理	　　　提供指标分类基础信息的维护和管理
+4		指标基础信息管理	　　　提供指标基础信息的维护和管理，便于对指标进行管理及后续查阅
+5		指标统计逻辑管理	　　　提供指标数据统计逻辑的维护和管理，便于对指标统计口径管理及后续查阅
+6		指标分类信息管理	　　　提供指标分类基础信息的维护和管理，便于对指标进行归类管理及后续查阅
+7		指标体系映射管理	　　　提供具体应用指标基础信息的维护和管理，通过引用标准指标体系，完成应用指标体系的管理，指标名称可根据具体需求或监管标准进行修改，实现一个标准名，多个曾用名
+8		指标信息审核管理	　　　提供指标信息审核管理，便于保障指标体系的规范性、合理性、正确性等
+9		　　　指标分类信息管理	　　　提供指标分类基础信息的维护和管理，便于对指标进行归类管理及后续查阅
+
+4.3.1.1.2数据库设计
+　　　tb_app_idicator：
+　　　代码	　　　名称	　　　数据类型	　　　注释
+　　　id	　　　主键ID	　　　int8	　　　主键
+　　　category_id	　　　分类ID	　　　int8	　　　应用指标分类ID
+　　　indicator_id	　　　指标ID	　　　int8	　　　指标ID
+　　　name	　　　应用指标名称	　　　varchar(200)	　　　应用指标名称
+　　　remark	　　　备注	　　　varchar(1000)	　　　说明
+　　　base	　　　是否基线	　　　int2	是否基线
+1:  是
+　　　0 : 否
+　　　audit_user	　　　审核人	　　　varchar(38)	　　　审核人
+　　　audit_status	　　　审核状态	　　　int2	　　　审核状态
+　　　audit_status_time	　　　审核状态时间	　　　timestamp	　　　审核时间
+　　　creator	　　　创建人	　　　varchar(36)	　　　创建人
+　　　create_time	　　　创建时间	　　　timestamp	　　　创建时间
+　　　updator	　　　修改人	　　　varchar(36)	　　　修改人
+　　　update_time	　　　修改时间	　　　timestamp	　　　修改时间
+　　　is_deleted	　　　删除状态	　　　int2	　　　删除状态0: 未删除 1:删除
+　　　audit_reason	　　　审核原因	　　　varchar(200)	　　　审核原因
+　　　代码	　　　名称	　　　数据类型	　　　注释
+　　　tb_app_idc_category：
+代码	名称	数据类型	注释
+id	主键ID	int8	主键
+system_id	监管系统	int8	监管体系id
+code	编码	varchar(30)	应用指标分类编码
+生成规则:
+‘G’（Genre）+3位数字，逐层递增，每层在上一层级基础上扩展一层 + 2位数字，如：G001.01的上层为G001；
+name	名称	varchar(200)	应用指标分类名称
+caliber	口径来源	varchar(200)	口径来源
+remark	备注	varchar(200)	说明
+parent_code	父级	varchar(30)	父级编码
+parent_codes	父级编码集	varchar(200)	所有父级编码以逗号(,)拼接
+status	状态	int2	状态
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp	修改时间
+is_deleted	删除状态	int2	删除状态 0: 未删除 1:删除
+　　　tb_app_idc_role_rel：
+　　　代码	　　　名称	　　　数据类型	　　　注释
+　　　id	　　　主键ID	　　　int8	　　　主键
+　　　app_indicator_id	　　　应用指标ID	　　　int8	　　　应用指标ID
+　　　role_id	　　　角色ID	　　　varchar(36)	　　　角色ID
+　　　creator	　　　创建人	　　　varchar(36)	　　　创建人
+　　　create_time	　　　创建时间	　　　timestamp	　　　创建时间
+　　　updator	　　　修改人	　　　varchar(36)	　　　修改人
+　　　update_time	　　　修改时间	　　　timestamp	　　　修改时间
+　　　is_deleted	　　　删除状态	　　　int2	　　　删除状态
+　　　代码	　　　名称	　　　数据类型	　　　注释
+　　　id	　　　主键ID	　　　int8	　　　主键
+　　　app_indicator_id	　　　应用指标ID	　　　int8	　　　应用指标ID
+　　　role_id	　　　角色ID	　　　varchar(36)	　　　角色ID
+　　　creator	　　　创建人	　　　varchar(36)	　　　创建人
+　　　create_time	　　　创建时间	　　　timestamp	　　　创建时间
+　　　tb_indicator_custom_sql：
+代码	名称	数据类型	注释
+id	主键	int8	主键
+statistic_id	统计口径ID	int8	统计口径ID
+sql_text	sql文本	text	sql文本
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp	膝盖时间
+is_deleted	删除状态	int2	删除状态
+tb_busi_domain：
+　　　代码	　　　名称	　　　数据类型	　　　注释
+id	主键	int8	主键
+code	业务域编码	varchar(20)	业务域编码
+生成规则:
+‘F’（Field）+ 2位数字，数字递增，如：F01、F02、F03、F04、F05等
+name	名称	varchar(200)	名称
+remark	说明	varchar(200)	说明
+status	状态 0：禁用
+1：启用	int2	状态 0：禁用
+1：启用
+status_time	状态时间	timestamp(6)	状态时间
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+is_deleted	删除状态0: 未删除 1:删除	int2	删除状态0: 未删除 1:删除
+tb_busi_scene:
+　　　代码	　　　名称	　　　数据类型	　　　注释
+id	主键	int8	主键
+busi_sys_id	业务系统ID 	int8	业务系统ID -tb_busi_system
+code	编码	varchar(30)	编码
+生成规则:
+‘P’（Process）+3位数字，逐层递增，每层在上一层级基础上扩展一层 + 2位数字，如：P001.01的上层为P001
+name	名称	varchar(200)	名称
+sort	排序	int2	排序
+parent_code	父级编码	varchar(30)	父级编码
+parent_codes	所有父级编码拼接	varchar(200)	所有父级编码拼接
+remark	说明	varchar(200)	说明
+status	状态	int2	状态
+status_time	状态时间	timestamp(6)	状态时间
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+is_deleted	是否删除	int2	0: 未删除
+1: 删除
+tb_indicator_cal_logic_cond：
+　　　代码	　　　名称	　　　数据类型	　　　注释
+id	主键	int8	主键
+statistic_id	统计口径ID	int8	统计口径ID
+sort	排序	int2	排序
+group_start	分组开始	varchar(10)	分组开始
+indicator_code	指标编码	varchar(50)	指标编码
+operator	运算符	varchar(10)	运算符
+group_end	分组结束	varchar(10)	分组结束
+parentb_id	暂无用 废弃	numeric(38)	暂无用 废弃
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+is_deleted	删除状态	int2	删除状态
+tb_indicator_category:
+　　　代码	　　　名称	　　　数据类型	注释
+id	主键	int8	主键
+busi_domain_id	业务域	int8	业务域
+code	指标分类编码
+	varchar(30)	指标分类编码
+规则：‘C’（Classification）+3位数字，逐层递增，每层在上一层级基础上扩展一层 + 2位数字，如：C001.01的上层为C001
+name	名称	varchar(200)	名称
+parent_code	父级编码	varchar(30)	父级编码
+parent_codes	所有父编码拼接	varchar(200)	所有父编码拼接
+remark	说明	varchar(200)	说明
+status	状态	int2	状态
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+is_deleted	删除状态	int2	删除状态
+tb_indicator_drill_route:
+　　　代码	　　　名称	　　　数据类型	　　　注释
+table	维度表  	varchar(100)	维度表  tb_table_field.code
+indicator_id	指标ID	int8	指标ID
+parent_id	父级ID  关联主键	int8	父级ID  关联主键
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+is_deleted	删除状态	int2	删除状态
+tb_indicator_info：
+　　　代码	　　　名称	　　　数据类型	注释
+code	编码
+	varchar(30)	编码
+规则：
+原子指标：‘A’（Atom）+ 4位数字，数字递增
+派生指标：‘A’（Atom）+ 4位数字（1级） + 4位数字（2级） + 3位数字（3级）+ 2位数字（4级），数字递增（最多四级）
+衍生指标：‘D’（Derived）+ 4位数字，数字递增
+name	名称	varchar(200)	名称
+unit	字典 IDC_UNIT	varchar(20)	字典 IDC_UNIT
+format	字典 IDC_FORMAT	varchar(20)	字典 IDC_FORMAT
+digit	字典 IDC_DIGIT	varchar(20)	字典 IDC_DIGIT
+nature	字典 IDC_NATURE	varchar(20)	字典 IDC_NATURE
+guide	字典 IDC_GUIDE	varchar(20)	字典 IDC_GUIDE
+way	字典 IDC_WAY	varchar(20)	字典 IDC_WAY
+basis	字典 IDC_BASIS	varchar(20)	字典 IDC_BASIS
+actual	字典 IDC_ACTUAL	varchar(20)	字典 IDC_ACTUAL
+logic	统计逻辑	varchar(500)	统计逻辑
+meaning	指标意义	varchar(500)	指标意义
+parent_code	父级编码	varchar(30)	父级编码
+status	状态	int2	状态
+status_time	状态时间	timestamp(6)	状态时间
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+audit_user	审核人	varchar(36)	审核人
+audit_status	字典 PUB_AUDIT_STATUS	int2	字典 PUB_AUDIT_STATUS
+audit_time	审核时间	timestamp(6)	审核时间
+audit_reason	审核原因	varchar(200)	审核原因
+is_deleted	字典 PUB_DELETE	int2	字典 PUB_DELETE
+data_status	状态数据标识，1是0否	int2	状态数据标识，1是0否
+status_indicator_statistical	字典 IDC_STATISTICAL	varchar(20)	字典 IDC_STATISTICAL
+indicator_version	指标版本字段	varchar(50)	指标版本字段
+tb_indicator_statistic：
+　　　代码	　　　名称	　　　数据类型	　　　注释
+type	指标类型
+	int2	指标类型
+1:  统计逻辑
+2：计算逻辑
+3：自定义SQL
+src_table	数据来源  	varchar(50)	数据来源  tb_table_list.code
+cal_method	计算方式	varchar(20)	计算方式
+measure_field	度量字段	varchar(50)	度量字段是 tb_table_field.code
+formulas	计算公式 暂未启用	varchar(500)	计算公式 暂未启用
+status	状态	int2	状态
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+is_deleted	字典 	int2	字典 PUB_DELETE
+group_info	前端分组信息	varchar(500)	前端分组信息
+tb_indicator_statistic_logic_cond：
+　　　代码	　　　名称	　　　数据类型	注释
+id	主键	int8	主键
+statistic_id	统计口径ID	int8	统计口径ID
+sort	序号	int2	序号
+group_start	分组开始	varchar(20)	分组开始
+field	字段 	varchar(50)	字段 tb_table_field
+operator	运算符	varchar(20)	运算符
+value	值	varchar(500)	值
+group_end	分组结束	varchar(20)	分组结束
+relation	关系	varchar(4)	关系
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+is_deleted	字典 PUB_DELETE	int2	字典 PUB_DELETE
+tb_metadata_analysis_dim_config：
+　　　代码	　　　名称	　　　数据类型	注释
+id	主键	int8	主键
+table_id	维表标识,源表主键	int8	维表标识,源表主键
+table_code	维表编码	varchar(50)	维表编码
+dim_name	分析维度字段名称，默认和维表	varchar(200)	分析维度字段名称，默认和维表
+connect_field	维表字段名称	varchar(50)	维表字段名称
+show_field	维表字段名称	varchar(50)	维表字段名称
+dim_type	分析维度， EXT: 扩展维度  NOR: 标准维度	varchar(10)	分析维度， EXT: 扩展维度  NOR: 标准维度
+join_type	分析维度连接类型	varchar(10)	分析维度连接类型
+join_cond	分析维度连接条件	varchar(1000)	分析维度连接条件
+pid	父级ID	int8	父级ID
+sort	排序	int2	排序
+status	状态 1: 启用  0: 未启用	int2	状态 1: 启用  0: 未启用
+remark	备注信息	varchar(200)	备注信息
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+sort_cond	排序字段	varchar(200)	排序字段
+dim_alias	维度别名	varchar(100)	维度别名
+tb_metadata_analysis_dim_rel：
+　　　代码	　　　名称	　　　数据类型	注释
+id	主键	int8	主键
+table_code	维表编码	varchar(50)	维表编码
+connect_field	维表字段名称	varchar(50)	维表字段名称
+linkage_table_code	下级维度表名称	varchar(50)	下级维度表名称
+linkage_connect_field	下级维度关联的字段名称	varchar(50)	下级维度关联的字段名称
+linkage_path	维度和下级维度的之间的关联路径	text	维度和下级维度的之间的关联路径
+linkage_rule_desc	维度级联规则描述	varchar(200)	维度级联规则描述
+linkage_rule_type	维度级联规则类型	varchar(50)	维度级联规则类型
+tb_metadata_dim_reduce_config：
+　　　代码	　　　名称	　　　数据类型	注释
+fact_schema	事实表schema	varchar(50)	事实表schema
+fact_table	事实表	varchar(50)	事实表
+dim_reduce_schema	降维表schema	varchar(50)	降维表schema
+dim_reduce_table	降维表	varchar(50)	降维表
+sort	排序	int2	排序
+status	状态 0未启用，1启用	int2	状态 0未启用，1启用
+tb_metadata_fact_dim_rel：
+　　　代码	　　　名称	　　　数据类型	注释
+fact_id	事实表标识,源表主键	int8	事实表标识,源表主键
+fact_field_id	事实表字段标识,源表字段表主键	int8	事实表字段标识,源表字段表主键
+dim_id	维表标识,源表主键	int8	维表标识,源表主键
+dim_field_id	维表字段标识,源表字段表主键	int8	维表字段标识,源表字段表主键
+rel_type	关联类型，默认=	varchar(4)	关联类型，默认=
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+tb_metadata_table_field_info：
+　　　代码	　　　名称	　　　数据类型	注释
+id	主键	int8	主键
+table_id	表标识	int8	表标识
+code	表字段编码	varchar(50)	表字段编码
+name	表字段名称	varchar(200)	表字段名称
+category	字段分类	int2	字段分类-1:度量属性 2:维度属性 3 维度&度量  4 标志
+type	字段类型	varchar(20)	字段类型1:varchar 2:int 3:datetime 等等
+status	状态	int2	状态 1: 启用  0: 未启用
+remark	备注信息	varchar(200)	备注信息
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+tb_metadata_table_info
+　　　代码	　　　名称	　　　数据类型	注释
+id	主键	int8	主键
+sys_id	系统标识	int8	系统标识
+type	1:业务表 2:基础表 3:事实表 4:维度表	int2	1:业务表 2:基础表 3:事实表 4:维度表
+code	表编码	varchar(50)	表编码
+name	表名称	varchar(200)	表名称
+schema	数据库模式	varchar(20)	数据库模式
+status	状态 1: 启用  0: 未启用	int2	状态 1: 启用  0: 未启用
+remark	备注信息	varchar(200)	备注信息
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+
+4.3.1.1.3接口设计
+4.3.1.1.3.1事实模型批量同步
+　　　事实模型同步接口
+　URL	　/gateway-jgpt/jgpt-im-service/v1/pt/metadata/factInfo/tableSynch
+　接口说明	　同步事实模型
+　请求方式	　POST
+　请求类型	　REST
+　	　参数名称	　参数说明	　数据类型	　是否必填	　字段长度	　说明
+　入参?	　请求体	　[
+? {
+? ? "sourceCode": "ods_his_prescription_record_ylhe5", 
+? ? "sourceName": null,
+? ? "configCode": "ods_his_prescription_record_ylhe5", 
+? ? "configName": null, 
+? ? "tableId": null, 
+? ? "schema": "ods_3" 
+? }
+]	　sourceCode：事实表名称（DM）
+　sourceName： 事实表说明（DM）
+　configCode：配置表名称
+　configName： 配置表说明
+　tableId：事实表id
+　schema：schema模式
+　返参	　	　同步完成的事实表ID（tableId）的集合	　Array	　是	　	　
+　返回类型	　application/json
+　返回样例
+　[
+"30673"
+]
+
+4.3.1.1.3.2事实表字段配置批量同步
+　　　事实表字段配置同步接口
+　　　URL	　　　/gateway-jgpt/jgpt-im-service/v1/pt/metadata/factInfo/fieldSynch
+　　　接口说明	　　　同步事实表字段配置
+　　　请求方式	　　　POST
+　　　请求类型	　　　REST
+　　　	　　　参数名称	　　　参数说明	　　　数据类型	　　　是否必填	　　　字段长度	　　　说明
+　　　入参?	　　　请求体	　　　{
+? "tableId": "30673", 
+? "fields": [
+? ? {
+? ? ? "fieldId": null, 
+? ? ? "sourceCode": "updator", 
+? ? ? "sourceName": null,
+? ? ? "configCode": "updator",
+? ? ? "configName": null, 
+? ? ? "configCate": null 
+? ? }
+? ]
+}	tableId：事实表id
+fields：字段集合
+fieldId：配置字段Id
+sourceCode：字段名（DM）
+sourceName：字段说明（DM）
+configCode：配置字段名
+configName：配置字段说明
+configCate：配置字段类型
+　　　返参	　　　	　　　同步完成的字段ID（fieldId）的集合	　　　Array	　　　是	　　　	　　　
+　　　返回类型	　　　application/json
+　　　返回样例
+　　　[
+"20415"
+]
+4.3.1.1.3.3事实表关联的指标列表
+　　　事实表关联的指标列表查询接口
+　　　URL	　　　gateway-jgpt/jgpt-im-service/v1/pt/indicator/queryByFactTable
+　　　接口说明	　　　获取与当前事实表关联的指标列集合
+　　　请求方式	　　　POST
+　　　请求类型	　　　REST
+　　　	　　　参数名称	　　　参数说明	　　　数据类型	　　　是否必填	　　　字段长度	　　　说明
+　　　入参?	　　　请求体	　　　{
+"factTables": [
+? ? "dm_rt_total_amount" // 
+? ],
+? "page": { // 展示表格分页信息
+? ? "pageNo": 1, // 当前页数
+? ? "pageSize": 10 // 每页条数
+? }
+}	factTables：事实表Code集合
+page：分页信息
+page.pageNo：当前页数
+page.pageSize：每页条数
+　　　
+　　　返参	　　　page	　　　分页信息	　　　Object	　　　是	　　　	　　　
+　　　	　　　data	　　　当前页指标数据列表	　　　Array	　　　是	　　　	　　　
+　　　返回类型	　　　application/json
+　　　返回样例
+?展开源码 
+{
+  "page": {
+    "enable": null,
+    "pageNo": 1,
+    "pageSize": 10,
+    "total": 3
+  },
+  "data": [
+    {
+      "busiDomainId": "88388968810283127",
+      "busiDomainName": "实时指标域",
+      "categoryId": "98003394836299912",
+      "categoryName": "费用统计",
+      "indicatorId": "98005256704622728",
+      "indicatorName": "医疗总收入",
+      "indicatorCode": "A0617"
+    }
+  ]
+}
+　　　事实表关联的指标列表查询接口
+　　　URL	　　　gateway-jgpt/jgpt-im-service/v1/pt/indicator/queryByFactTable
+4.3.1.1.3.4事实模型导出
+　　　事实模型导出接口
+　　　URL	　　　/gateway-jgpt/jgpt-im-service/v1/pt/metadata/factInfo/export?tableIds=XXX&tableIds=XXX
+　　　接口说明	　　　导出事实模型
+　　　请求方式	　　　GET
+　　　请求类型	　　　REST
+　　　	　　　参数名称	　　　参数说明	　　　数据类型	　　　是否必填	　　　字段长度	　　　说明
+　　　入参	　　　tableIds	　　　事实表ID集合	　　　Array	　　　是	　　　	　　　
+　　　返参	　　　dimTableField	　　　维度表字段集合	　　　Array	　　　是	　　　	　　　
+　　　	　　　factDimRel	　　　	　　　Array	　　　是	　　　	　　　
+　　　	　　　factTable	　　　事实表集合	　　　Array	　　　是	　　　	　　　
+　　　	　　　factTableField	　　　事实表字段集合	　　　Array	　　　是	　　　	　　　
+　　　返回类型	　　　application/json
+　　　返回样例
+　　　?展开源码 
+　　　{
+　　　  dimTableField: [
+　　　    {
+　　　      "id": 734,
+　　　      "tableId": 30390,
+　　　      "tableCode": "dim_organization_level",
+　　　      "dimName": "主数据",
+　　　      "connectField": "global_level5_org_id",
+　　　      "showField": "global_level5_org_name",
+　　　      "dimType": "EXT",
+　　　      "joinType": null,
+　　　      "joinCond": null,
+　　　      "pid": 586,
+　　　      "sort": null,
+　　　      "status": 1,
+　　　      "remark": null,
+　　　      "creator": "100001",
+　　　      "createTime": 1695125161405,
+　　　      "updator": "100001",
+　　　      "updateTime": 1715048162197,
+　　　      "sortCond": "",
+　　　      "dimAlias": null
+　　　    }
+　　　  ],
+　　　  factDimRel: [
+　　　    {
+　　　      "id": 2935,
+　　　      "factId": 30531,
+　　　      "factFieldId": 19115,
+　　　      "dimId": 30390,
+　　　      "dimFieldId": null,
+　　　      "relType": "=",
+　　　      "creator": "100001",
+　　　      "createTime": 1714977858100,
+　　　      "updator": null,
+　　　      "updateTime": 1714977858100,
+　　　      "factTableCode": "dm_ss_zy_out_hospital_person",
+　　　      "factFieldCode": "org_id",
+　　　      "dimTableCode": "dim_organization_level",
+　　　      "dimFieldCode": null,
+　　　      "sourceId": 1
+　　　    }
+　　　  ],
+　　　  factTable: [
+　　　    {
+　　　      "id": 30531,
+　　　      "sysId": null,
+　　　      "type": 3,
+　　　      "code": "dm_ss_zy_out_hospital_person",
+　　　      "name": null,
+　　　      "schema": "dm",
+　　　      "status": 1,
+　　　      "remark": null,
+　　　      "creator": "100001",
+　　　      "createTime": 1698370161438,
+　　　      "updator": "100001",
+　　　      "updateTime": 1698370161438,
+　　　      "sourceId": 1
+　　　    }
+　　　  ],
+　　　  factTableField: [
+　　　    {
+　　　      "id": 19171,
+　　　      "tableId": 30539,
+　　　      "code": "org_id",
+　　　      "name": null,
+　　　      "category": null,
+　　　      "type": null,
+　　　      "status": 1,
+　　　      "remark": null,
+　　　      "creator": "100001",
+　　　      "createTime": 1698928028801,
+　　　      "updator": "100001",
+　　　      "updateTime": 1712887041946,
+　　　      "tableCode": "dm_ss_zy_in_hospital_person",
+　　　      "sourceId": 1,
+　　　      "dataType": "numeric",
+　　　      "length": null
+　　　    }
+　　　  ]
+　　　}
+　　　
+4.3.1.1.3.5事实模型导入
+　　　事实模型导入接口
+　　　URL	　　　gateway-jgpt/jgpt-im-service/v1/pt/metadata/factInfo/import
+　　　接口说明	　　　获取与当前事实表关联的指标列集合
+　　　请求方式	　　　POST
+　　　请求类型	　　　REST
+　　　	　　　参数名称	　　　参数说明	　　　数据类型	　　　是否必填	　　　字段长度	　　　说明
+　　　入参?	　　　请求体	　　　{
+? "file": (二进制)
+}	　　　
+　　　返参	　　　	　　　	　　　Array	　　　是	　　　	　　　
+　　　返回类型	　　　application/json
+　　　返回样例
+　　　[]
+
+4.3.1.1.3.6维度模型批量同步接口
+　　　维度模型同步接口
+　　　URL	　　　/gateway-jgpt/jgpt-im-service/v1/pt/metadata/dimInfo/tableSynch
+　　　接口说明	　　　同步维度模型
+　　　请求方式	　　　POST
+　　　请求类型	　　　REST
+　　　	　　　参数名称	　　　参数说明	　　　数据类型	　　　是否必填	　　　字段长度	　　　说明
+　　　入参?	　　　请求体	　　　[
+? {
+? ? "sourceCode": "dm_dim_userstatus", 
+? ? "sourceName": "用户是否启用维度表", 
+? ? "configCode": "dm_dim_userstatus", 
+? ? "configName": "用户是否启用维度表", 
+? ? "tableId": null, 
+? ? "schema": "dm" 
+? }
+]	　　　sourceCode：维度表名称（DM）
+　　　sourceName：维度表说明（DM）
+　　　configCode：维度配置表名称
+　　　configName：维度配置表说明
+　　　tableId：维度表id
+　　　schema：schema模式
+　　　返回类型	　　　application/json
+　　　返回样例
+　　　-
+
+4.3.1.1.3.7事实表列表查询
+　　　事实表列表查询接口
+　　　URL	　　　/gateway-jgpt/jgpt-im-service/v1/pt/metadata/factDimRel/search
+　　　接口说明	　　　事实表列表查询，包含表字段信息集合
+　　　请求方式	　　　POST
+　　　请求类型	　　　REST
+　　　	　　　参数名称	　　　参数说明	　　　数据类型	　　　是否必填	　　　字段长度	　　　说明
+　　　入参?	　　　请求体	　　　{
+　　　? "filter": {
+? ? "name": ""
+? },
+? "page": { 
+? ? "pageNo": 1, 
+? ? "pageSize": 10 
+? }
+}	　　　filter：过滤条件对象
+　　　filter.name：维度表名称/说明
+　　　page：分页信息
+　　　page.pageNo：当前页数
+　　　page.pageSize：每页条数
+　　　返参	　　　page	　　　分页信息	　　　Object	　　　是	　　　	　　　
+　　　	　　　data	　　　当前页数据集合	　　　Array	　　　是	　　　	　　　
+　　　返回类型	　　　application/json
+　　　返回样例
+　　　?展开源码 
+　　　{
+　　　  data:[
+　　　    {
+　　　      "sourceCode": "dim_aux_asevent",
+　　　      "sourceName": "埋点事件码维表",
+　　　      "configCode": "dim_aux_asevent",
+　　　      "configName": "埋点事件码维表",
+　　　      "tableId": "30049",
+　　　      "schema": "dw",
+　　　      "configStatus": "Y",
+　　　      "configFieldStatus": null,
+　　　      "fields": [
+　　　        {
+　　　          "sourceCode": "project_code",
+　　　          "sourceName": "项目编码（3,4,9）",
+　　　          "configCode": "project_code",
+　　　          "configName": "项目编码（3,4,9）",
+　　　          "fieldId": "16122",
+　　　          "configCate": null,
+　　　          "configStatus": null
+　　　        }
+　　　      ],
+　　　      "configFields": [
+　　　        {
+　　　          "tableId": "30049",
+　　　          "dimId": "700",
+　　　          "dimName": "埋点事件码维表",
+　　　          "keyField": "event_type",
+　　　          "showField": "event_type",
+　　　          "dimType": "NOR",
+　　　          "joinType": null,
+　　　          "joinCond": null,
+　　　          "pid": "0",
+　　　          "sortCond": null,
+　　　          "column": null,
+　　　          "direction": null,
+　　　          "dimAlias": null
+　　　        }
+　　　      ]
+　　　    }
+　　　  ],
+　　　  page: {
+　　　    "enable": null,
+　　　    "pageNo": 1,
+　　　    "pageSize": 10,
+　　　    "total": 340
+　　　  }
+　　　}
+　　　
+4.3.1.1.4界面设计
+指标页面设计：
+
+　　　指标编辑页面设计：
+
+指标审核页面设计：
+
+4.3.1.2.综合监管驾驶舱
+4.3.1.2.1功能描述
+序号	模块名称	功能名称	功能描述
+1	医疗服务	　　　区域地图	提供上海市长宁区地图，展示监管系统建设情况
+2		　　　医疗服务	提供门急诊，出入院信息
+3	智能辅助	门急诊人次趋势	提供门急诊人次与增幅等分析数据展示
+4		AI辅助服务	展示AI辅助次数统计数据
+5	卫生资源	医生日均担负诊疗人次	展示门急诊人次与医生日均负担诊疗人次情况
+6		医生日均担负住院床日	展示出院人次与医生日均担负住院床日
+
+4.3.1.2.2数据库设计
+tb_synthetic_idc_param：
+代码	名称	数据类型	注释
+id	主键id	int8	主键id
+subject_category	主题类别	varchar(100)	主题类别
+business_module	业务模块	varchar(100)	业务模块
+param_json	模块查询参数json	text	模块查询参数json
+create_time	创建时间	timestamp(6)	创建时间
+update_time	修改时间	timestamp(6)	修改时间
+tb_synthetic_sql_param：
+代码	名称	数据类型	注释
+subject_category	主题类别	varchar(100)	主题类别
+business_module	业务模块	varchar(100)	业务模块
+show_indicator	展示指标code	varchar(50)	展示指标code
+create_time	创建时间	timestamp(6)	创建时间
+update_time	修改时间	timestamp(6)	修改时间
+sql_template_id	sql模板ID	int8	sql模板ID
+indicator_group	组成指标集(用 , 隔开)	varchar(255)	组成指标集(用 , 隔开)
+remark	备用字段(此时作为表格首列固定值)	varchar(255)	备用字段(此时作为表格首列固定值)
+tb_synthetic_sql_template：
+代码	名称	数据类型	注释
+id	主键id	int8	主键id
+sql_template	sql模板	text	sql模板
+create_time	创建时间	timestamp(6)	创建时间
+update_time	修改时间	timestamp(6)	修改时间
+is_delete	是否删除	int8	是否删除
+remark	备注	varchar(255)	备注
+4.3.1.2.3接口设计
+4.3.1.2.3.1驾驶舱模块参数查询
+驾驶舱模块参数查询接口
+URL	/gateway/jgpt-im-service/v1/pt/synthetic/getIdcParam
+接口说明	获取驾驶舱模块参数
+请求方式	POST
+请求类型	REST
+	参数名称	参数说明	数据类型	是否必填	字段长度	说明
+请求头	authorization	认证token	String	是		
+	X-AppCode	应用Code	String	是		
+入参?	请求体	{
+?      subjectCategory: "portal"
+}	subjectCategory: 分类
+返参		Portal模块	Array	是		
+返回类型	application/json
+4.3.1.2.3.2获取地图区域数据
+获取地图区域数据
+URL	/gateway/jgpt-im-service/v1/pt/synthetic/getAreaMapData
+接口说明	获取地图区域数据
+请求方式	POST
+请求类型	REST
+	参数名称	参数说明	数据类型	是否必填	字段长度	说明
+请求头	authorization	认证token	String	是		
+	X-AppCode	应用Code	String	是		
+入参?	请求体	{
+?      regionId: 530800
+}	subjectCategory: 分类
+返参		区域数据	Object	是		
+返回类型	application/json
+返回样例
+展开源码 
+
+{
+appCode: "big-screen-stat"
+areaCode: "530800"
+areaCoverStr: null
+areaName: "上海市长宁区"
+id: null
+json: {}
+labelOffset: 0.028
+mapPng: null
+outlineJson: {}
+rotateX: "0"
+rotateY: "0"
+rotateZ: "0"
+scale: "1"
+}
+
+
+4.3.1.2.4界面设计[截图替换现场系统图]
+首页：
+
+卫生资源：
+
+医疗概况：
+
+4.3.1.3.监管决策支持系统
+4.3.1.3.1功能描述
+序号	模块名称	功能名称	功能描述
+1	综合概况	综合概况	提供整体指标数据展示
+2	卫生资源	卫生资源分析	相关整体指标情况
+3		卫生资源综合报表	卫生资源综合按照时间与机构展示相关数据
+4	医疗服务	医疗服务概况	展示医疗服务相关指标数据
+5		门急诊服务分析	展示门急诊相关指标数据服务
+6	医疗质量	　　　医疗质量概况	医疗质量相关指标概况数据展示
+
+4.3.1.3.2数据库设计
+tb_report_release_version：
+代码	名称	数据类型	注释
+id	主键ID	int8	主键ID
+release_version	迭代版本	varchar(30)	迭代版本
+remark	备注	varchar(200)	备注
+status	状态	int2	状态， 0：进行中，1：已完成 2:已上线 
+is_deleted	删除状态	int2	删除状态 1:删除 0:未删除 默认未删除
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+tb_report_release_version_record：
+代码	名称	数据类型	注释
+id	主键ID	int8	主键ID
+report_id	报表ID	int8	报表ID
+report_version_id	报表版本ID	int8	报表版本ID
+release_version_id	报表迭代版本id	int8	报表迭代版本id
+status	提测状态	int2	提测状态， 0：未提测，1：测试中 2：已发布，3：已上线
+is_deleted	删除状态	int2	删除状态 1:删除 0:未删除 默认未删除
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+remark	备注	varchar(200)	备注
+creator_name	创建者名称	varchar(36)	创建者名称
+updater_name	更新者名称	varchar(36)	更新者名称
+publish_time	发布时间	timestamp(6)	发布时间
+tb_report_version：
+代码	名称	数据类型	注释
+id	主键ID	int8	主键ID
+report_id	报表ID	int8	报表ID
+version	报表版本	varchar(50)	报表版本
+thumbnail	报表缩略图	text	报表缩略图
+setting	报表过滤器设置	text	报表过滤器设置
+content	报表内容	text	报表内容
+remark	备注	varchar(200)	备注
+publish_status	发布状态 0:未发布 1:已发布 2:已上线 	int2	发布状态 0:未发布 1:已发布 2:已上线 
+publisher	发布人	varchar(36)	发布人
+publish_time	发布时间	timestamp(6)	发布时间
+is_deleted	删除状态 1:删除 0:未删除 默认未删除	int2	删除状态 1:删除 0:未删除 默认未删除
+creator	创建人	varchar(36)	创建人
+create_time	创建时间	timestamp(6)	创建时间
+updator	修改人	varchar(36)	修改人
+update_time	修改时间	timestamp(6)	修改时间
+publisher_name	发布人姓名	varchar(50)	发布人姓名
+
+4.3.1.3.3接口设计
+4.3.1.3.3.1报表主题体系查询
+报表主题体系查询接口（树形）
+URL	/gateway-jgpt/jgpt-im-service/v1/pt/report/themeTree
+接口说明	获取报表主题体系树形
+请求方式	POST
+请求类型	REST
+	参数名称	参数说明	数据类型	是否必填	字段长度	说明
+请求头
+
+
+	channel	渠道	String	是		由综合监管平台系统管理员确认对接场景后提供。
+其中X-AppCode在请求头中携带，其他参数在请求地址后携带。默认值：oauth
+	access_token	认证token	String	是		
+	busiUserId	业务用户ID	String	是		
+	X-AppCode	应用Code	String	是		
+入参?	请求体	{
+? "parentId": "",
+? "name": ""
+}	parentId: 主题父级ID
+name: 主题名称
+4.3.1.3.3.2主题体系下报表集合查询
+指定主题体系下报表集合查询接口
+URL	/gateway-jgpt/jgpt-im-service/v1/pt/report/getReportList
+接口说明	获取指定主题体系下报表集合
+请求方式	POST
+请求类型	REST
+	参数名称	参数说明	数据类型	是否必填	字段长度	说明
+请求头
+
+
+	channel	渠道	String	是		由综合监管平台系统管理员确认对接场景后提供。
+其中X-AppCode在请求头中携带，其他参数在请求地址后携带。默认值：oauth
+	access_token	认证token	String	是		
+	busiUserId	业务用户ID	String	是		
+	X-AppCode	应用Code	String	是		
+入参?	请求体	{
+? "filter": {
+? ? "reportType": "",
+? ? "publishStatus": "",
+? ? "reportName": "",
+? ? "themeId": "148027070058856615",
+? ? "echoReportIds": [],
+? ? "reportQueryScope": "ALL_TYPE"
+? },
+? "page": {
+? ? "pageNo": 1,
+? ? "pageSize": 12,
+? ? "total": 0
+? }
+}
+	reportType: 报表类型
+publishStatus: 报表状态
+reportName：报表名称
+themeId：报表主题体系ID
+echoReportIds：默认选中需回填的报表ID集合
+reportQueryScope：当前页搜索/全局搜索
+page：分页信息
+返参	page	分页信息	Object	是		
+	data	当前页数据	Array			
+返回类型	application/json
+返回样例
+?展开源码 
+{
+  data: [
+    {
+      "reportId": "153481519610986678",
+      "reportName": "分组表格",
+      "reportType": "statistic",
+      "themeId": "148027070058856615",
+      "themeName": "hzl1",
+      "releaseVersionId": null,
+      "lastReleaseVersionId": null,
+      "usingReportVersionId": "153481519610986678",
+      "lastReportVersionId": null,
+      "reportVersionAndReleaseDTO": {
+        "reportVersionId": "153481519610986678",
+        "reportVersion": null,
+        "releaseVersionId": null,
+        "releaseVersion": null,
+        "thumbnail": "153499961126813878.png",
+        "publishStatus": 0,
+        "setting": null,
+        "content": null,
+        "publisher": null,
+        "publishTime": null,
+        "publisherName": null,
+        "remark": null
+      },
+      "newestReportVersionId": null,
+      "newestReportVersionName": null,
+      "creatorName": "超级管理员",
+      "updaterName": "超级管理员"
+    }
+  ],
+  page: {
+    "enable": null,
+    "pageNo": 1,
+    "pageSize": 12,
+    "total": 5
+  }
+}
+
+4.3.1.3.3.3报表发布
+报表发布为菜单接口
+URL	/gateway-jgpt/jgpt-im-service/v1/pt/report/publish
+接口说明	将报表发布为其他应用菜单，多用于发布到决策平台等
+请求方式	POST
+请求类型	REST
+	参数名称	参数说明	数据类型	是否必填	字段长度	说明
+请求头
+
+
+	channel	渠道	String	是		由综合监管平台系统管理员确认对接场景后提供。
+其中X-AppCode在请求头中携带，其他参数在请求地址后携带。默认值：oauth
+	access_token	认证token	String	是		
+	busiUserId	业务用户ID	String	是		
+	X-AppCode	应用Code	String	是		
+入参?	请求体	{
+? "appId": "1154189255024640",
+? "appName": "jgpt-im-service",
+? "createTime": "2024-07-15T07:30:34.723Z",
+? "extJson": {},
+? "id": "",
+? "level": 1,
+? "code": "130031558668058785-1721028634723",
+? "name": "过程查询明细",
+? "parentId": "1154330485628928",
+? "reportProjectId": "130031558668058785",
+? "remark": "{\"chartType\":[\"BaseIframe\"]}",
+? "sort": 1,
+? "status": 1,
+? "type": 0,
+? "url": "/jgpt/report-management/preview1300315586680587851721028634723",
+? "urlType": 0
+}
+	appId: 应用ID
+appName: 报表Code（3.0没有，5.0有，从用户可访问菜单接口中获取）
+createTime：菜单创建时间
+extJson：菜单扩展信息
+id：菜单IDlevel：菜单层级
+code：菜单code
+name：菜单名称parentId：父级菜单ID
+reportProjectId：报表ID
+remark：菜单备注信息
+sort：菜单序号
+status：
+type：
+url：菜单地址
+urlType：菜单地址类型
+返参	page	分页信息	Object	是		
+	data	--	Null	是		
+返回类型	application/json
+返回样例
+?展开源码 
+{
+  "code": 200,
+  "msg": "OK",
+  "data": null,
+  "success": null
+}
+
+4.3.1.3.3.4报表详情查询
+报表详情查询接口
+URL	/gateway-jgpt/jgpt-im-service/v1/pt/report/getReportDetail
+接口说明	查询报表详情
+请求方式	POST
+请求类型	REST
+	参数名称	参数说明	数据类型	是否必填	字段长度	说明
+请求头
+
+
+	channel	渠道	String	是		由综合监管平台系统管理员确认对接场景后提供。
+其中X-AppCode在请求头中携带，其他参数在请求地址后携带。默认值：oauth
+	access_token	认证token	String	是		
+	busiUserId	业务用户ID	String	是		
+	X-AppCode	应用Code	String	是		
+入参?	请求体	{
+? "reportId": "147452128556744804",
+? "reportVersionId": "147452128556744804",
+? "releaseVersionId": ""
+}	reportId: 报表ID
+reportVersionId: 报表版本ID
+releaseVersionId：迭代版本ID
+返参	code	接口状态码	String	是		
+	data	报表schema信息	Object	是		
+返回类型	application/json
+返回样例
+?展开源码 
+{
+  "code": 200,
+  "msg": "OK",
+  "data": {
+    "reportId": "147452128556744804",
+    "reportName": "test1111",
+    "reportType": "statistic",
+    "themeId": "101454376362573980",
+    "reportVersionId": "147452128556744804",
+    "reportVersion": null,
+    "releaseVersionId": null,
+    "releaseVersion": null,
+    "thumbnail": null,
+    "publishStatus": null,
+    "setting": "{\"themeInfo\":{\"theme\":\"default\",\"colors\":[\"rgba(80, 137, 252, 1)\",\"rgba(86, 223, 166, 1)\",\"rgba(251, 171, 59, 1)\",\"rgba(174, 219, 63, 1)\",\"rgba(183, 128, 222, 1)\",\"rgba(249, 137, 195, 1)\",\"rgba(55, 190, 170, 1)\",\"rgba(119, 212, 252, 1)\",\"rgba(255, 133, 110, 1)\",\"rgba(156, 174, 212, 1)\"]},\"searchConfig\":{\"defultTimeLabel\":\"\",\"defaultGranularity\":\"day\",\"checkTimeGranularity\":true,\"granularityDay\":\"today\",\"granularityMonth\":\"LastMonth\",\"granularityYear\":\"ThisYear\",\"showOrg\":true,\"showDepartment\":false,\"commonParams\":[],\"reportGlobalConfigEnable\":true,\"timeConfigType\":1,\"granularitySetting\":[7,30],\"defaultTimeset\":7,\"hasDetailTable\":false,\"deadline\":\"yesterday\",\"statDimension\":\"includeChild\",\"defaultDimValueEnable\":\"OFF\",\"timeConfigEnable\":true,\"granularityQuarter\":\"firstQuarter\",\"initStartTime\":\"\",\"initStartTimeEnable\":false,\"showAllOrgFlagEnable\":false,\"showDataSourceTime\":false,\"timeGranularity\":[\"day\",\"month\"],\"waterMarkEnable\":false,\"timeIntervalEnabled\":true,\"checkSecondGranularity\":false,\"combinedFilter\":{\"connectorType\":\"and\",\"dimList\":[],\"filterName\":\"\"},\"themeId\":\"101454376362573980\",\"commonParamsDefaultValues\":[],\"timeSpan\":\"none\"}}",
+    "content": "[{\"pageId\":\"\",\"pageName\":\"\",\"pageInfo\":{\"image\":\"147668744158576772.png\",\"width\":1920,\"previewType\":\"edit\",\"height\":1080},\"pageLayoutInfo\":{\"layoutData\":{\"mPixelsRanges\":[],\"rows\":{\"rowItems\":{\"0\":{\"height\":150},\"1\":{\"height\":150},\"2\":{\"height\":150},\"3\":{\"height\":150},\"4\":{\"height\":150}}},\"mRanges\":[\"A0:L4\"],\"cols\":{\"colItems\":{\"0\":{\"width\":155},\"1\":{\"width\":155},\"2\":{\"width\":155},\"3\":{\"width\":155},\"4\":{\"width\":155},\"5\":{\"width\":155},\"6\":{\"width\":155},\"7\":{\"width\":155},\"8\":{\"width\":155},\"9\":{\"width\":155},\"10\":{\"width\":155},\"11\":{\"width\":155}}}},\"divAbsoluteLayoutData\":{\"layoutItems\":[{\"borderLeft\":false,\"isInlayoutGroup\":false,\"top\":0,\"left\":0,\"borderRight\":false,\"show\":true,\"width\":1860,\"uuid\":\"a5680297-5ffe-460e-9910-b60f78424d1b\",\"borderTop\":false,\"borderBottom\":false,\"height\":750}],\"width\":1860,\"height\":750},\"layoutGroups\":{\"layoutGroupItems\":[],\"width\":1860,\"height\":750}},\"containerList\":{\"a5680297-5ffe-460e-9910-b60f78424d1b\":{\"componentIds\":[{\"_tabTypeIcon\":\"\",\"groupType\":\"card\",\"tabTypeIcon\":\"\",\"name\":\"卡片组\",\"chartType\":\"CardGroup\",\"index\":0,\"chartSource\":\"local\",\"componentKey\":\"a5680297-5ffe-460e-9910-b60f78424d1b-0\",\"uuid\":\"a5680297-5ffe-460e-9910-b60f78424d1b\"}],\"image\":\"\",\"position\":{\"top\":0,\"left\":0,\"width\":1860,\"height\":750},\"uuid\":\"a5680297-5ffe-460e-9910-b60f78424d1b\",\"tabConfig\":{\"tabTitle\":\"\",\"tabTitleEnable\":true,\"tabPosition\":\"left\",\"tabStyle\":\"underline\"}}},\"componentMap\":{\"a5680297-5ffe-460e-9910-b60f78424d1b-0\":{\"uuid\":\"a5680297-5ffe-460e-9910-b60f78424d1b\",\"componentKey\":\"a5680297-5ffe-460e-9910-b60f78424d1b-0\",\"groupType\":\"card\",\"chartType\":\"CardGroup\",\"name\":\"卡片组\",\"chartSource\":\"local\",\"index\":0,\"attr\":{\"cardDisplay\":\"auto\",\"title_enable\":true,\"bgColor\":\"default\",\"series\":[{\"value_bq\":0,\"idcCode\":\"A0030.0005\",\"idcName\":\"技师（士）数\",\"showType\":1,\"unit\":\"people\",\"unitName\":\"人\",\"color\":\"rgba(80, 137, 252, 1)\",\"remark\":\"按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。\",\"meaning\":\"\",\"logic\":\"按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。\",\"digit\":\"int\",\"value\":0,\"data\":[],\"dataProps\":[],\"imgSelect\":\"\",\"dataUnit\":1,\"alias\":\"\",\"jumpInfo\":{}},{\"value_bq\":4,\"idcCode\":\"D0388\",\"idcName\":\"门诊诊断符合有效病历数\",\"showType\":1,\"unit\":\"share\",\"unitName\":\"份\",\"color\":\"rgba(86, 223, 166, 1)\",\"remark\":\"按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）\",\"meaning\":\"\",\"logic\":\"按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）\",\"digit\":\"int\",\"value\":4,\"data\":[],\"jumpInfo\":{}}],\"rowNum\":2,\"colNum\":2,\"attr\":[\"base\",\"style\",\"series\"],\"title\":\"我的卡片组\",\"sourceData\":{},\"background_enable\":false,\"titleShowType\":\"maintitle\",\"_series_dialog_config\":false,\"_series_dialog\":false},\"series\":[{\"value_bq\":0,\"idcCode\":\"A0030.0005\",\"idcName\":\"技师（士）数\",\"showType\":1,\"unit\":\"people\",\"unitName\":\"人\",\"color\":\"rgba(80, 137, 252, 1)\",\"remark\":\"按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。\",\"meaning\":\"\",\"logic\":\"按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。\",\"digit\":\"int\",\"value\":0,\"data\":[],\"dataProps\":[],\"imgSelect\":\"\",\"dataUnit\":1,\"alias\":\"\",\"jumpInfo\":{}},{\"value_bq\":4,\"idcCode\":\"D0388\",\"idcName\":\"门诊诊断符合有效病历数\",\"showType\":1,\"unit\":\"share\",\"unitName\":\"份\",\"color\":\"rgba(86, 223, 166, 1)\",\"remark\":\"按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）\",\"meaning\":\"\",\"logic\":\"按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）\",\"digit\":\"int\",\"value\":4,\"data\":[],\"jumpInfo\":{}}]}},\"dataCenter\":{\"a5680297-5ffe-460e-9910-b60f78424d1b-0\":{\"chartCond\":{\"other\":{},\"chartType\":\"CardGroup\",\"dim\":{\"showDim\":[]},\"idc\":[{\"id\":\"74835890270109799\",\"appIdcId\":\"84953965636092015\",\"code\":\"A0030.0005\",\"name\":\"技师（士）数\",\"dataAttr\":[]},{\"id\":\"87928379738685559\",\"appIdcId\":\"120660598231924918\",\"code\":\"D0388\",\"name\":\"门诊诊断符合有效病历数\",\"dataAttr\":[]}]},\"componentData\":{\"eventMap\":[],\"searchEventMap\":{},\"dataType\":\"dynamic\",\"compareData\":[],\"sourceData\":[]},\"temChartCond\":{\"other\":{},\"chartType\":\"CardGroup\",\"dim\":{\"showDim\":[]},\"idc\":[{\"id\":\"74835890270109799\",\"appIdcId\":\"84953965636092015\",\"code\":\"A0030.0005\",\"name\":\"技师（士）数\",\"dataAttr\":[]},{\"id\":\"87928379738685559\",\"appIdcId\":\"120660598231924918\",\"code\":\"D0388\",\"name\":\"门诊诊断符合有效病历数\",\"dataAttr\":[]}]},\"searchParams\":{\"indicatorList\":[{\"code\":\"A0030.0005\",\"remark\":\"按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。\",\"busiDomainId\":\"74722920819064934\",\"type\":\"appIdc\",\"busiSceneId\":\"74718345605152870\",\"yAxisIndexName\":\"左Y轴\",\"parentCode\":\"A0030\",\"meaning\":\"\",\"appIdcName\":\"技师（士）数\",\"showType\":1,\"disabled\":false,\"id\":\"74835890270109799\",\"appIdcId\":\"84953965636092015\",\"guide\":\"manual\",\"digit\":\"int\",\"chartTypeName\":\"柱状\",\"actual\":\"N\",\"nature\":\"quantitative\",\"format\":\"num\",\"parentCodes\":\"A0030\",\"basis\":\"chwstjnj\",\"leaf\":true,\"way\":\"auto\",\"unit\":\"people\",\"name\":\"技师（士）数\",\"chartType\":\"bar\",\"logic\":\"按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。\",\"routeList\":[],\"categoryId\":\"74724534653026406\",\"appCategoryId\":\"84949677111246959\",\"status\":1,\"yAxisIndex\":0},{\"code\":\"D0388\",\"remark\":\"按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）\",\"busiDomainId\":\"74725303452172390\",\"type\":\"appIdc\",\"busiSceneId\":\"74718558206034022\",\"yAxisIndexName\":\"左Y轴\",\"parentCode\":\"\",\"meaning\":\"\",\"appIdcName\":\"门诊诊断符合有效病历数\",\"showType\":1,\"disabled\":false,\"id\":\"87928379738685559\",\"appIdcId\":\"120660598231924918\",\"guide\":\"increase\",\"digit\":\"int\",\"chartTypeName\":\"柱状\",\"actual\":\"N\",\"nature\":\"quantitative\",\"format\":\"num\",\"parentCodes\":\"\",\"basis\":\"\",\"leaf\":true,\"way\":\"auto\",\"unit\":\"share\",\"name\":\"门诊诊断符合有效病历数\",\"chartType\":\"bar\",\"logic\":\"按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）\",\"routeList\":[{\"indicatorId\":\"87928379738685559\",\"id\":\"106573459835846809\",\"table\":\"dim_organization_level#level1_org_id\"},{\"indicatorId\":\"87928379738685559\",\"id\":\"106573459836108953\",\"table\":\"dim_organization_level#level2_org_id\"},{\"indicatorId\":\"87928379738685559\",\"id\":\"106573459836371097\",\"table\":\"dim_organization_level#level3_org_id\"},{\"indicatorId\":\"87928379738685559\",\"id\":\"106573459836633241\",\"table\":\"dim_organization_level#level4_org_id\"},{\"indicatorId\":\"87928379738685559\",\"id\":\"106573459836895385\",\"parentId\":\"106573459835846809\",\"table\":\"dim_organization_level#level2_org_id\"},{\"indicatorId\":\"87928379738685559\",\"id\":\"106573459837157529\",\"parentId\":\"106573459836108953\",\"table\":\"dim_organization_level#level3_org_id\"},{\"indicatorId\":\"87928379738685559\",\"id\":\"106573459837419673\",\"parentId\":\"106573459836371097\",\"table\":\"dim_organization_level#level4_org_id\"},{\"indicatorId\":\"87928379738685559\",\"id\":\"106573459837681817\",\"parentId\":\"106573459836633241\",\"table\":\"dim_organization_level#level5_org_id\"}],\"categoryId\":\"74725319558299750\",\"appCategoryId\":\"80749775695118443\",\"status\":1,\"yAxisIndex\":0}],\"dim\":[],\"diemensionOptionData\":[{\"dimInfo\":\"5\",\"name\":\"机构维表\",\"code\":\"org_id\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"org_id\",\"dimName\":\"org_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"机构维表\",\"dimAlias\":\"机构-备注\"},{\"dimInfo\":\"6\",\"name\":\"科室维表\",\"code\":\"dept_id\",\"dimTable\":\"dim_scd_dept\",\"dimKey\":\"dept_id\",\"dimName\":\"dept_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"dept_id\",\"factFieldName\":\"科室维表\",\"dimAlias\":null},{\"dimInfo\":\"10\",\"name\":\"区域\",\"code\":\"region_id\",\"dimTable\":\"dim_region\",\"dimKey\":\"region_id\",\"dimName\":\"region_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"region_id\",\"factFieldName\":\"区域\",\"dimAlias\":null},{\"dimInfo\":\"204\",\"name\":\"数据来源\",\"code\":\"data_src_code\",\"dimTable\":\"dm_dim_data_src\",\"dimKey\":\"data_src_code\",\"dimName\":\"data_src_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"data_src_code\",\"factFieldName\":\"数据来源\",\"dimAlias\":null},{\"dimInfo\":\"293\",\"name\":\"省\",\"code\":\"province_code\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"province_code\",\"dimName\":\"province_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"省\",\"dimAlias\":\"省-备注\"},{\"dimInfo\":\"294\",\"name\":\"市\",\"code\":\"city_code\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"city_code\",\"dimName\":\"city_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"市\",\"dimAlias\":\"市-备注\"},{\"dimInfo\":\"295\",\"name\":\"区县1\",\"code\":\"district_code\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"district_code\",\"dimName\":\"district_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"区县1\",\"dimAlias\":\"区县\"},{\"dimInfo\":\"419\",\"name\":\"(区域)省维度\",\"code\":\"province_code\",\"dimTable\":\"dim_region\",\"dimKey\":\"province_code\",\"dimName\":\"province_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"region_id\",\"factFieldName\":\"(区域)省维度\",\"dimAlias\":null},{\"dimInfo\":\"420\",\"name\":\"(区域)市维度\",\"code\":\"city_code\",\"dimTable\":\"dim_region\",\"dimKey\":\"city_code\",\"dimName\":\"city_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"region_id\",\"factFieldName\":\"(区域)市维度\",\"dimAlias\":null},{\"dimInfo\":\"421\",\"name\":\"(区域)区县维度\",\"code\":\"district_code\",\"dimTable\":\"dim_region\",\"dimKey\":\"district_code\",\"dimName\":\"district_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"region_id\",\"factFieldName\":\"(区域)区县维度\",\"dimAlias\":null},{\"dimInfo\":\"531\",\"name\":\"机构类型\",\"code\":\"org_type_code\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"org_type_code\",\"dimName\":\"org_type_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"机构类型\",\"dimAlias\":null},{\"dimInfo\":\"562\",\"name\":\"上级机构\",\"code\":\"higher_org_source_key\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"higher_org_source_key\",\"dimName\":\"higher_org_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"上级机构\",\"dimAlias\":null},{\"dimInfo\":\"600\",\"name\":\"中西医机构分类\",\"code\":\"auxorg_busi_type_code\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"auxorg_busi_type_code\",\"dimName\":\"auxorg_busi_type_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"中西医机构分类\",\"dimAlias\":null},{\"dimInfo\":\"681\",\"name\":\"标准科室代码\",\"code\":\"standard_department_code\",\"dimTable\":\"dim_scd_dept\",\"dimKey\":\"standard_department_code\",\"dimName\":\"standard_department_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"dept_id\",\"factFieldName\":\"标准科室代码\",\"dimAlias\":null},{\"dimInfo\":\"706\",\"name\":\"管理机构\",\"code\":\"manage_org_type_code\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"manage_org_type_code\",\"dimName\":\"manage_org_type_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"管理机构\",\"dimAlias\":null},{\"dimInfo\":\"721\",\"name\":\"主数据机构\",\"code\":\"global_org_id\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"global_org_id\",\"dimName\":\"global_org_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"主数据机构\",\"dimAlias\":null},{\"dimInfo\":\"735\",\"name\":\"科室类型\",\"code\":\"dept_type_code\",\"dimTable\":\"dim_scd_dept\",\"dimKey\":\"dept_type_code\",\"dimName\":\"dept_type_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"dept_id\",\"factFieldName\":\"科室类型\",\"dimAlias\":null},{\"dimInfo\":\"743\",\"name\":\"主数据市\",\"code\":\"global_city_code\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"global_city_code\",\"dimName\":\"global_city_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"主数据市\",\"dimAlias\":null},{\"dimInfo\":\"754\",\"name\":\"医疗机构标识\",\"code\":\"global_medical_org_flag\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"global_medical_org_flag\",\"dimName\":\"global_medical_org_flag\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"医疗机构标识\",\"dimAlias\":null},{\"dimInfo\":\"755\",\"name\":\"公卫机构标识\",\"code\":\"global_ph_org_flag\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"global_ph_org_flag\",\"dimName\":\"global_ph_org_flag\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"公卫机构标识\",\"dimAlias\":null},{\"dimInfo\":\"769\",\"name\":\"业务机构标识\",\"code\":\"org_source_key\",\"dimTable\":\"dim_scd_organization\",\"dimKey\":\"org_source_key\",\"dimName\":\"org_name\",\"orgIds\":null,\"commonDimFlag\":\"1\",\"factDimRelId\":null,\"analysisDimId\":null,\"factTable\":\"dm_health_workers_type_person\",\"factFieldCode\":\"org_id\",\"factFieldName\":\"业务机构标识\",\"dimAlias\":null}]}}},\"dataSourceTypeMap\":{\"a5680297-5ffe-460e-9910-b60f78424d1b-0\":\"idc_dim\"},\"attrCentre\":{\"a5680297-5ffe-460e-9910-b60f78424d1b-0\":{\"cardDisplay\":\"auto\",\"title_enable\":true,\"bgColor\":\"default\",\"series\":[{\"value_bq\":0,\"idcCode\":\"A0030.0005\",\"idcName\":\"技师（士）数\",\"showType\":1,\"unit\":\"people\",\"unitName\":\"人\",\"color\":\"rgba(80, 137, 252, 1)\",\"remark\":\"按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。\",\"meaning\":\"\",\"logic\":\"按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。\",\"digit\":\"int\",\"value\":0,\"data\":[],\"dataProps\":[],\"imgSelect\":\"\",\"dataUnit\":1,\"alias\":\"\",\"jumpInfo\":{}},{\"value_bq\":4,\"idcCode\":\"D0388\",\"idcName\":\"门诊诊断符合有效病历数\",\"showType\":1,\"unit\":\"share\",\"unitName\":\"份\",\"color\":\"rgba(86, 223, 166, 1)\",\"remark\":\"按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）\",\"meaning\":\"\",\"logic\":\"按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）\",\"digit\":\"int\",\"value\":4,\"data\":[],\"jumpInfo\":{}}],\"rowNum\":2,\"colNum\":2,\"attr\":[\"base\",\"style\",\"series\"],\"title\":\"我的卡片组\",\"sourceData\":{},\"background_enable\":false,\"titleShowType\":\"maintitle\",\"_series_dialog_config\":false,\"_series_dialog\":false}},\"schemaCentre\":{},\"eventMap\":{},\"operationCentre\":{\"a5680297-5ffe-460e-9910-b60f78424d1b-0\":{\"chartTimeCheckList\":[],\"dataCompareInfo\":{\"compareIndicator\":\"\",\"compareDim\":\"\",\"compareDimValuesList\":\"\",\"compareDimValue\":[],\"compareShowType\":\"stack\"},\"dataFilterInfo\":[],\"relationInfo\":{\"type\":\"jump\",\"goto\":{\"jumpReport\":\"144206660141842541\",\"jumpType\":\"dialog\",\"jumpRange\":\"overall\",\"seriesJumpReports\":[{\"name\":\"技师（士）数\",\"code\":\"A0030.0005\",\"reportId\":\"\",\"jumpStyle\":[]},{\"name\":\"门诊诊断符合有效病历数\",\"code\":\"D0388\",\"reportId\":\"\",\"jumpStyle\":[]}]},\"correlation\":{\"relationDimInfo\":[],\"relationComp\":[]}},\"drillDownInfo\":{\"currentDim\":{},\"routePathMap\":{},\"SourceDataMap\":{},\"routePathTreeMap\":{}},\"operationConfigShow\":{\"isDrill\":false,\"isDrillRetainTitle\":false,\"isDetail\":false,\"disabledDrill\":false,\"disabledDetail\":false,\"isRelation\":true,\"disabledRelation\":false,\"isDataFilter\":false,\"disabledDataFilter\":false,\"isDataCompare\":false,\"disabledDataCompare\":false}}}}]",
+    "publisher": null,
+    "publishTime": null,
+    "publisherName": null,
+    "remark": null
+  },
+  "success": null
+}
+
+4.3.1.3.3.5图例数据查询
+图例数据查询接口
+URL	/gateway-jgpt/jgpt-im-service/v1/pt/report/chart/getData
+接口说明	查询图例数据
+请求方式	POST
+请求类型	REST
+	参数名称	参数说明	数据类型	是否必填	字段长度	说明
+入参	请求体	?展开源码 
+{
+  "reportId": "147452128556744804",  // 报表ID
+  "componentKey": "a5680297-5ffe-460e-9910-b60f78424d1b-0",  // 图例在此报表中的唯一标识
+  "reportGlobalConfig": {  // 报表全局配置
+    "enable": true,  // 报表全局配置开关
+    "deadline": "yesterday",  // 报表报表查询截止时间
+    "statDimension": "includeChild" // 机构过滤器配置
+  },
+  "baseCond": {    // 报表公共参数
+    "type": "day", // 时间粒度
+    "startTime": "2024-07-16 00:00:00", // 开始时间
+    "endTime": "2024-07-16 23:59:59"    // 结束时间
+  },
+  "chartCond": {  // 图例参数
+    "other": {},  
+    "chartType": "CardGroup", // 图例类型
+    "dim": { // 图例选择维度
+      "showDim": []
+    },
+    "idc": [ // 图例选择指标
+      {
+        "id": "74835890270109799",
+        "appIdcId": "84953965636092015",
+        "code": "A0030.0005",
+        "name": "技师（士）数",
+        "dataAttr": []
+      },
+      {
+        "id": "87928379738685559",
+        "appIdcId": "120660598231924918",
+        "code": "D0388",
+        "name": "门诊诊断符合有效病历数",
+        "dataAttr": []
+      }
+    ]
+  },
+  "combinedFilter": {  // 报表组合过滤器配置
+    "dimList": [],
+    "connectorType": "",
+    "filterName": ""
+  },
+  "timeParamCorrelationVo": [],  // 多时间控件参数
+  "customerFilters": [] // 维度值排除项
+}
+	是		
+返参		图例数据	Array / Object	是		包含以下几种数据格式：
+1、常规图例数据
+2、分组表格数据
+3、交叉表格数据
+返回类型	application/json
+返回样例
+?展开源码 
+[
+  {
+    "code": "A0030.0005",
+    "unitName": "人",
+    "data": [
+      {
+        "value_bq": 0
+      }
+    ],
+    "dataStatus": 1,
+    "type": 1,
+    "unit": "people",
+    "meaning": "",
+    "appIdcRemark": "按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。",
+    "name": "技师（士）数",
+    "statusIndicatorStatistical": null,
+    "showType": 1,
+    "appIdcName": "技师（士）数",
+    "logic": "按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。",
+    "appIdcId": "84953965636092015",
+    "digit": "int"
+  },
+  {
+    "code": "D0388",
+    "unitName": "份",
+    "data": [
+      {
+        "value_bq": 4
+      }
+    ],
+    "dataStatus": 0,
+    "type": 2,
+    "unit": "share",
+    "meaning": null,
+    "appIdcRemark": "按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）",
+    "name": "门诊诊断符合有效病历数",
+    "statusIndicatorStatistical": null,
+    "showType": 1,
+    "appIdcName": "门诊诊断符合有效病历数",
+    "logic": "按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）",
+    "appIdcId": "120660598231924918",
+    "digit": "int"
+  }
+]
+
+4.3.1.3.3.6明细表格图例数据查询
+明细表格图例数据查询接口
+URL	/gateway-jgpt/jgpt-im-service/v1/pt/detailTable/query
+接口说明	查询明细表格图例数据
+请求方式	POST
+请求类型	REST
+	参数名称	参数说明	数据类型	是否必填	字段长度	说明
+入参	请求体	?展开源码 
+{
+  "reportId": "151535976735309984",
+  "checkSql": "select \norg_id,\nfull_date,\norg_name,\ndept_id,\ndept_name,\nuser_id,\nuser_name,\namount\nfrom dm.dm_hospital_income t\nleft join ods.ods_uap_organization on t.org_name = ods_uap_organization.name\n where   1=1\n      and (org_name  in  ($org_name$) or'-8888'  in  ($org_name$))\n      and (amount >=  ($amount$) )\n  and full_date >= $startTime$\n  and  full_date <= $endTime$\n$DataAuth_AreaOrOrgOrDept$\n",
+  "queryParam": [
+    {
+      "id": "startTime",
+      "paramName": "startTime",
+      "paramDec": "开始时间",
+      "paramShow": false,
+      "paramType": "date",
+      "paramValueType": "",
+      "paramCode": "startTime",
+      "customInfoTable": [],
+      "detail": {
+        "dimTable": "",
+        "dimTableValue": ""
+      },
+      "paramValue": [
+        "2025-03"
+      ],
+      "isShowWhere": false,
+      "whereStr": "",
+      "dataAuthType": "default",
+      "tableCodeType": "table",
+      "paramSql": "",
+      "isRelation": false,
+      "relationItems": [
+        {
+          "table": "",
+          "tableField": "",
+          "tableCodeType": "table",
+          "tableFields": []
+        }
+      ]
+    },
+    {
+      "id": "endTime",
+      "paramName": "endTime",
+      "paramDec": "结束时间",
+      "paramShow": false,
+      "paramType": "date",
+      "paramValueType": "",
+      "paramCode": "endTime",
+      "customInfoTable": [],
+      "detail": {
+        "dimTable": "",
+        "dimTableValue": ""
+      },
+      "paramValue": [
+        "2024-07"
+      ],
+      "isShowWhere": false,
+      "whereStr": "",
+      "dataAuthType": "default",
+      "tableCodeType": "table",
+      "paramSql": "",
+      "isRelation": false,
+      "relationItems": [
+        {
+          "table": "",
+          "tableField": "",
+          "tableCodeType": "table",
+          "tableFields": []
+        }
+      ]
+    }
+  ],
+  "page": {
+    "pageSize": 10,
+    "pageNo": 1,
+    "total": 10,
+    "enable": true
+  },
+  "aggregation": [],
+  "reportGlobalConfig": {
+    "enable": false,
+    "deadline": "yesterday",
+    "statDimension": "includeChild"
+  },
+  "detailSort": {
+    "key": "",
+    "sortType": ""
+  }
+}
+	是		reportId：报表ID
+checkSql：图例数据sql
+queryParam：图例过滤参数
+page：分页信息
+aggregation
+reportGlobalConfig：报表全局配置
+detailSort
+返参	page	分页数据	Object	是		
+	resultList	明细表格结果集	Array	是		
+	columns	明细表格列信息	Array	是		
+	aggregationMap		Object	是		
+返回类型	application/json
+返回样例
+?展开源码 
+{
+  "page": {
+    "enable": true,
+    "pageNo": 1,
+    "pageSize": 10,
+    "total": 1971
+  },
+  "resultList": [
+    {
+      "org_id": "10267250",
+      "full_date": "2024-04-15",
+      "org_name": "程家桥街道社区卫生服务中心",
+      "dept_id": "0",
+      "dept_name": "",
+      "user_id": "0",
+      "user_name": "",
+      "amount": 11
+    },
+    {
+      "org_id": "10267250",
+      "full_date": "2024-04-16",
+      "org_name": "程家桥街道社区卫生服务中心",
+      "dept_id": "0",
+      "dept_name": "",
+      "user_id": "0",
+      "user_name": "",
+      "amount": 112.5
+    },
+    {
+      "org_id": "10267248",
+      "full_date": "2025-03-01",
+      "org_name": "程家桥街道社区卫生服务中心",
+      "dept_id": "100017756",
+      "dept_name": "儿科",
+      "user_id": "0",
+      "user_name": "",
+      "amount": 305.62
+    },
+    {
+      "org_id": "10267248",
+      "full_date": "2025-03-01",
+      "org_name": "程家桥街道社区卫生服务中心",
+      "dept_id": "100017756",
+      "dept_name": "儿科",
+      "user_id": "0",
+      "user_name": "",
+      "amount": 707.35
+    },
+    {
+      "org_id": "10267248",
+      "full_date": "2025-03-01",
+      "org_name": "程家桥街道社区卫生服务中心",
+      "dept_id": "100017756",
+      "dept_name": "儿科",
+      "user_id": "0",
+      "user_name": "",
+      "amount": 385.14
+    },
+    {
+      "org_id": "10267248",
+      "full_date": "2025-03-01",
+      "org_name": "程家桥街道社区卫生服务中心",
+      "dept_id": "100017756",
+      "dept_name": "儿科",
+      "user_id": "0",
+      "user_name": "",
+      "amount": 4.88
+    },
+    {
+      "org_id": "10267248",
+      "full_date": "2025-03-01",
+      "org_name": "程家桥街道社区卫生服务中心",
+      "dept_id": "100017756",
+      "dept_name": "儿科",
+      "user_id": "0",
+      "user_name": "",
+      "amount": 11.72
+    },
+    {
+      "org_id": "10267248",
+      "full_date": "2025-03-01",
+      "org_name": "程家桥街道社区卫生服务中心",
+      "dept_id": "100017756",
+      "dept_name": "儿科",
+      "user_id": "0",
+      "user_name": "",
+      "amount": 9.96
+    },
+    {
+      "org_id": "10267248",
+      "full_date": "2025-03-01",
+      "org_name": "程家桥街道社区卫生服务中心",
+      "dept_id": "100017756",
+      "dept_name": "儿科",
+      "user_id": "0",
+      "user_name": "",
+      "amount": 693.88
+    },
+    {
+      "org_id": "10267248",
+      "full_date": "2025-03-01",
+      "org_name": "程家桥街道社区卫生服务中心",
+      "dept_id": "100017756",
+      "dept_name": "儿科",
+      "user_id": "0",
+      "user_name": "",
+      "amount": 39.1
+    }
+  ],
+  "columns": [
+    {
+      "name": "org_id",
+      "type": "INT8",
+      "displaySize": 20,
+      "className": "java.lang.Long",
+      "precision": 19,
+      "scale": 0
+    },
+    {
+      "name": "full_date",
+      "type": "DATE",
+      "displaySize": 13,
+      "className": "java.sql.Date",
+      "precision": 13,
+      "scale": 0
+    },
+    {
+      "name": "org_name",
+      "type": "VARCHAR",
+      "displaySize": 200,
+      "className": "java.lang.String",
+      "precision": 200,
+      "scale": 0
+    },
+    {
+      "name": "dept_id",
+      "type": "INT8",
+      "displaySize": 20,
+      "className": "java.lang.Long",
+      "precision": 19,
+      "scale": 0
+    },
+    {
+      "name": "dept_name",
+      "type": "VARCHAR",
+      "displaySize": 200,
+      "className": "java.lang.String",
+      "precision": 200,
+      "scale": 0
+    },
+    {
+      "name": "user_id",
+      "type": "INT8",
+      "displaySize": 20,
+      "className": "java.lang.Long",
+      "precision": 19,
+      "scale": 0
+    },
+    {
+      "name": "user_name",
+      "type": "VARCHAR",
+      "displaySize": 200,
+      "className": "java.lang.String",
+      "precision": 200,
+      "scale": 0
+    },
+    {
+      "name": "amount",
+      "type": "NUMERIC",
+      "displaySize": 40,
+      "className": "java.math.BigDecimal",
+      "precision": 38,
+      "scale": 6
+    }
+  ],
+  "aggregationMap": {}
+}
+
+4.3.1.3.3.7应用指标信息查询
+应用指标信息查询接口
+URL	/gateway-jgpt/jgpt-im-service/v1/pt/appIndicator/detail
+接口说明	查询应用指标详情
+请求方式	POST
+请求类型	REST
+	参数名称	参数说明	数据类型	是否必填	字段长度	说明
+入参	请求体	[
+"84953965636092015",
+"120660598231924918"
+]	是		应用指标ID集合
+返参		应用指标数据集合	Array	是		
+返回类型	application/json
+返回样例
+?展开源码 
+[
+  {
+    "id": "84953965636092015",
+    "categoryId": "84949677111246959",
+    "indicatorId": "74835890270109799",
+    "name": "技师（士）数",
+    "remark": "按照当前时间统计，指检验技师（士）和影像技师（士），包括主任技师、副主任技师、主管技师、技师、技士。",
+    "base": null,
+    "auditUser": "1157203374153728",
+    "auditStatus": 3,
+    "auditStatusTime": "2025-03-05T03:04:33.409+0000",
+    "creator": "1157203374153728",
+    "createTime": "2025-03-04T09:39:06.535+0000",
+    "updater": null,
+    "updateTime": "2025-03-04T09:39:06.535+0000",
+    "isDeleted": 0,
+    "auditReason": null
+  },
+  {
+    "id": "120660598231924918",
+    "categoryId": "80749775695118443",
+    "indicatorId": "87928379738685559",
+    "name": "门诊诊断符合有效病历数",
+    "remark": "按病历创建时间统计，对门诊诊疗过程中产生的有效病历进行诊断质检，且医生诊断与智医助理AI推荐诊断符合的病历数进行统计。(门诊诊断符合有效病历数=门诊诊断质检有效病历数-门诊诊断不符合病历数）",
+    "base": null,
+    "auditUser": "1289876751065088",
+    "auditStatus": 3,
+    "auditStatusTime": "2023-07-24T06:59:05.152+0000",
+    "creator": "1289876751065088",
+    "createTime": "2023-07-24T06:58:59.666+0000",
+    "updater": null,
+    "updateTime": "2023-07-24T06:58:59.666+0000",
+    "isDeleted": 0,
+    "auditReason": null
+  }
+]
+
+4.3.1.3.3.8维度过滤器级联配置查询
+指定报表下维度过滤器级联配置查询接口
+URL	/gateway-jgpt/jgpt-im-service/v1/pt/metadata/dimRel/dimLinkageDetail?reportId=XXX
+接口说明	查询报表中过滤器之间的级联配置
+请求方式	POST
+请求类型	REST
+	参数名称	参数说明	数据类型	是否必填	字段长度	说明
+入参	reportId	报表ID	String	是		
+	请求体	[
+? {
+? ? "tableCode": "dim_scd_organization",
+? ? "dimKey": "org_id"
+? }
+]	是		tableCode：维表Code dimKey：维度Key
+返参	维度级联配置集合	Array	是		
+返回类型	application/json
+返回样例
+?展开源码 
+[
+  {
+    "tableCode": "dim_scd_organization",
+    "dimName": null,
+    "dimKey": "org_id",
+    "linkage": [
+      {
+        "tableCode": "dim_scd_dept",
+        "dimKey": "dept_id",
+        "dimName": null
+      },
+      {
+        "tableCode": "dim_scd_user",
+        "dimKey": "user_id",
+        "dimName": null
+      },
+      {
+        "tableCode": "dim_scd_dept",
+        "dimKey": "dept_type_code",
+        "dimName": null
+      }
+    ],
+    "searchKey": null
+  }
+]
+
+
+
+4.3.1.3.4界面设计[截图替换现场系统图]
+医疗概况：
+
+卫生资源分析：
+
+医疗服务概况：
+
+
+4.4.应用中心
+4.4.1医技预约详细设计 
+4.4.1.1 用户管理服务 
+4.4.1.1.1 功能概述 
+　　　负责用户的注册、登录、信息管理、权限控制等功能，包括医护人员、系统管理员二类用户。 
+4.4.1.1.2 类设计 
+1.User 类：封装用户基本信息，包括用户 ID、姓名、性别、年龄、联系方式、身份证号、用户类型（患者 / 医护人员 / 管理员）等属性，以及对应的 getter 和 setter 方法。 
+2.UserService 接口：定义用户管理相关的业务方法，如register(User user)（用户注册）、User login(String username, String password)（用户登录）、void updateUser(User user)（更新用户信息）等。 
+3.UserServiceImpl 类：实现 UserService 接口，调用 UserMapper 进行数据库操作，完成用户注册、登录验证、信息更新等业务逻辑。 
+4.UserMapper 接口：继承 MyBatis-Plus 的 BaseMapper 接口，定义用户相关的数据库操作 SQL 语句，如根据用户名查询用户信息、插入新用户等。 
+4.4.1.1.3 业务流程 
+1.用户登记：用户提交注册信息，UserServiceImpl 接收信息，验证信息合法性（如用户名是否重复、密码格式是否正确），通过后调用 UserMapper 将用户信息插入数据库，注册成功返回用户 ID。 
+2.用户登录：用户输入用户名和密码，UserServiceImpl 调用 UserMapper 查询数据库验证用户信息，验证通过后生成 Token（基于 JWT）返回给用户，后续用户请求携带 Token 进行身份验证。 
+
+
+4.4.1.2 预约服务 
+4.4.1.2.1 功能概述 
+　　　为医生提供医技检查预约功能，包括检查项目查询、预约时段选择、预约订单生成、预约取消与改约等。 
+4.4.1.2.2 类设计 
+1.Appointment 类：表示预约订单，包含预约 ID、患者 ID、检查项目 ID、预约时间、预约状态（待检查 / 已完成 / 已取消）、预约医疗机构 ID 等属性，以及相关的查询方法。 
+2.AppointmentService 接口：定义预约相关业务方法，如获取可预约时段）、（创建预约订单）、取消预约）等。 
+3.AppointmentServiceImpl 类：实现 AppointmentService 接口，调用 AppointmentMapper 和其他相关服务（如查询服务、用户管理服务）完成预约业务逻辑。 
+4.AppointmentMapper 接口：继承 BaseMapper 接口，定义预约订单相关的数据库操作 SQL，如插入预约订单、更新预约状态等。 
+4.4.1.2.3 业务流程 
+1.预约时段查询：患者选择检查项目后，AppointmentServiceImpl 调用调度服务获取该项目在各医疗机构的可预约时段，结合自身业务规则（如患者优先级、距离限制等）筛选出符合条件的时段返回给患者。 
+2.预约创建：患者选择预约时段提交预约请求，AppointmentServiceImpl 验证患者身份和预约条件（如是否超过预约次数限制），通过后生成预约订单，调用 AppointmentMapper 插入数据库，并通知调度服务生成调度任务。 
+3.预约取消与改约：患者发起取消或改约请求，AppointmentServiceImpl 判断预约状态是否允许操作，若允许则更新预约状态，调用调度服务释放或重新分配资源。 
+4.4.1.3 调度服务 
+4.4.1.3.1 功能概述 
+根据预约订单和调度算法，为预约订单分配检查时间和设备，处理资源冲突，实现智能调度。 
+4.4.1.3.2 类设计 
+1.ScheduleTask 类：表示调度任务，包含任务 ID、预约 ID、检查时间、检查设备 ID、医技科室 ID 等属性，以及相关的 getter 和 setter 方法。 
+2.ScheduleService 接口：定义调度相关业务方法，如 （为预约订单生成调度任务）、 处理调度冲突）等。 
+3.ScheduleServiceImpl 类：实现 ScheduleService 接口，调用 ScheduleMapper 和其他相关服务（如预约服务、医技科室服务），运用调度算法完成调度业务逻辑。 
+4.ScheduleMapper 接口：继承 BaseMapper 接口，定义调度任务相关的数据库操作 SQL，如插入调度任务、更新任务状态等。 
+4.4.1.4.2 类设计 
+1.DataShareService 接口：定义数据共享相关业务方法，如 （推送检查结果）、 查询共享数据）等。 
+2.DataShareServiceImpl 类：实现 DataShareService 接口，通过调用数据库操作和消息队列，实现数据的推送和查询功能。 
+4.4.1.3.3 业务流程 
+1.调度任务生成：接收到预约服务的调度请求后，ScheduleServiceImpl 根据调度算法（如基于优先级的最早可用时间算法），查询医技科室的设备使用情况和工作负荷，为预约订单分配检查时间和设备，生成调度任务并调用 ScheduleMapper 插入数据库。 
+2.冲突处理：定时扫描调度任务，若发现资源冲突（如同一设备同一时间被多个任务占用），ScheduleServiceImpl 根据冲突解决策略（如调整优先级低的任务时间），调用 ScheduleMapper 更新相关任务，必要时通知预约服务调整预约时间并告知患者。 
+4.4.1.4 数据共享服务 
+4.4.1.4.1 功能概述 
+实现患者预约信息、检查结果等数据在区域内各医疗机构间的共享，提供数据推送和查询功能。 
+4.4.1.4.3 业务流程 
+1.检查结果推送：医技科室上传检查结果后，DataShareServiceImpl 接收到结果数据，根据患者信息和相关医生信息，通过消息队列将结果推送给对应患者和医生。 
+2.数据查询：医护人员或患者发起数据查询请求，DataShareServiceImpl 根据查询条件，从数据库中查询相关共享数据并返回。 
+4.4.1.5 统计分析服务 
+4.4.1.5.1 功能概述 
+对预约数据进行统计分析，生成各类报表，如每日预约量统计、各医疗机构预约占比统计、检查项目热门程度统计等，为管理决策提供依据。 
+4.4.1.5.2 类设计 
+1.StatisticsService 接口：定义统计分析相关业务方法，如 获取每日预约量统计）、 获取各医疗机构预约占比统计）等。 
+2.StatisticsServiceImpl 类：实现 StatisticsService 接口，通过复杂的 SQL 查询和数据处理，生成统计报表数据。 
+4.4.1.5.3 业务流程 
+　　　系统管理人员或相关人员发起统计请求,StatisticsServiceImpl 根据请求类型，执行相应的 SQL 查询语句从数据库中获取数据，进行数据处理和计算，生成统计报表数据返回给请求方。 
+4.4.2传染病综合监测
+　　　通过智能插件与医疗机构的医生工作站直接对接，基于医生工作站传输的数据、第三方互联网预登记对接数据以及自身内置的规则库自动判断病例是否属于监测对象及登记对象是否还需医生登记，针对监测对象除提供病例登记、采样、送样、收样、检测结果录入支撑外，还可根据病例登记时生成的“病例编号”串联不同节点不同入口采集的数据，对数据进行归纳汇总，针对需进行病原学检测确定检测结果才能进行确诊的病例，可直接推送传染病报告管理系统，减少基层医生的重复工作量。
+4.4.2.1症候群监测登记
+4.4.2.1.1门急诊发热监测登记
+?智能提醒协同：根据医生工作站推送信息识别是否为监测对象，若是且经判断无预登记信息时提醒医生进行登记，已有预登记信息则跳过，直接抽取主诉信息补充登记内容。
+?登记：提供门急诊发热监测对象登记功能，涉及登记、采样、送样信息。
+?居民电子健康档案系统业务协同：用户登记门急诊发热个案信息时可调用居民电子健康档案信息对个案登记表进行初始化。
+4.4.2.1.2住院发热监测登记
+?智能提醒协同：根据医生工作站推送信息识别是否为监测对象，若是且经判断无预登记信息时提醒医生进行登记，已有预登记信息则跳过，直接抽取主诉信息补充登记内容。
+?登记：提供住院发热监测对象登记功能，涉及登记、采样、送样信息。
+?居民电子健康档案系统业务协同：用户登记住院发热个案信息时可调用居民电子健康档案信息对个案登记表进行初始化。
+4.4.2.1.3肠道监测病例登记
+?智能提醒协同：根据医生工作站推送信息识别是否为监测对象，若是提醒医生进行登记。
+?登记：提供肠道监测病例登记功能，涉及登记、采样、送样信息。
+?居民电子健康档案系统业务协同：用户登记肠道监测病例个案信息时可调用居民电子健康档案信息对个案登记表进行初始化。
+4.4.2.1.4儿童腹综监测登记
+?智能提醒协同：根据医生工作站推送信息识别是否为监测对象，若是提醒医生进行登记。
+?登记：提供儿童腹综监测对象登记功能，涉及登记、采样、送样信息。
+?居民电子健康档案系统业务协同：用户登记儿童腹综监测个案信息时可调用居民电子健康档案信息对个案登记表进行初始化。
+4.4.2.2.实验室信息管理
+4.4.2.2.1发热送样单收样
+　　　支持进行发热送样单收样操作，更新检测信息状态，支持查询统计及附件导出功能。
+4.4.2.2.2肠道送样单收样
+　　　支持进行发热送样单收样操作，更新检测信息状态，支持查询统计及查询结果附件导出功能。
+4.4.2.2.3综合监测细菌检测结果导入
+　　　为区级疾控实验室用户提供综合监测细菌监测结果导入支撑，依照系统提供的模板可将信息导入系统，模板支持下载到本地。支持对导入数据的查询、编辑及维护，后导入数据将覆盖前次导入数据。
+4.4.2.2.4综合监测病毒检测结果导入
+　　　为区级疾控实验室用户提供综合监测病毒监测结果导入支撑，依照系统提供的模板可将信息导入系统，模板支持下载到本地。支持对导入数据的查询、编辑及维护，后导入数据将覆盖前次导入数据。
+4.4.2.3. 查询统计
+4.4.2.3.1热病例报告情况统计表
+　　　系统提供基于业务数据生成相关的发热病例报告情况统计表的功能。用户可将相关统计结果进行导出。
+4.4.2.3.2呼综检测结果一览表
+　　　系统提供基于业务数据生成相关的呼综检测结果一览表的功能。用户可将相关统计结果进行导出。
+4.4.2.3.3发热伴常规监测统计表
+　　　系统提供基于业务数据生成相关的发热伴常规监测统计表的功能，统计发热伴皮疹/发热伴出血/发热伴神经系统症状监测信息。用户可将相关统计结果进行导出。
+4.4.2.3.4肺炎病例监测统计表
+　　　系统提供基于业务数据生成相关的肺炎病例监测统计表的功能。用户可将相关统计结果进行导出。
+4.4.2.3.5腹发综个案监测报表
+　　　系统提供基于业务数据生成相关的腹综个案监测报表的功能，可切换成人/儿童病例。用户可将相关统计结果进行导出。
+4.4.2.3.6呼综分机构监测报表
+　　　系统提供基于业务数据生成相关的呼综监测统计报表（分机构）的功能。用户可将相关统计结果进行导出。
+4.4.2.4.相关管理
+4.4.2.4.1信息交流反馈
+　　　系统提供用户上传各类文件的功能，发布人可发布或删除相关信息；其他用户可按权限范围进行文件搜索、查看、下载。
+4.4.2.4.2人口数据导入
+　　　系统提供用户依照系统提供的模板将人口数据导入系统的功能。模板可通过系统提供的【模板下载】功能下载到本地。
+　　　对于导入系统的数据，用户可通过设定不同的查询条件筛选出符合条件的数据。
+4.4.2.4.3采样间隔规则管理
+　　　系统提供用户查询呼综间隔采样/腹泻病间隔采样规则的功能。相关规则通过线下形式进行维护
+4.4.2.4.4机构上传数据履历
+　　　系统提供用户查询所有医疗机构通过接口上传的信息，可根据上传的接口类型进行查询。
+4.4.2.4.5附件导出
+　　　系统定期生成相关业务所需的分析数据的附件供用户导出，用户可筛选需要导出的附件类型（如发热监测病例、呼综监测病例、发热伴监测病例、腹综病例、流感监测病例、肺炎病例、监测报告等）。
+　　　相关附件根据类型（每周汇总、月度汇总、季度汇总、年度汇总）不同，系统进行不同时间的留存，超过留存时间后于服务器上删除相关附件。
+4.4.2.4.6医院基础信息导入
+　　　系统提供用户依照系统提供的模板将医院基础数据导入系统的功能。模板可通过系统提供的【模板下载】功能下载到本地。
+　　　对于导入系统的数据，用户可通过设定不同的查询条件筛选出符合条件的数据。
+
+4.4.2.5.打印管理
+4.4.2.5.1发热条码打印
+　　支持医疗机构人员通过设定不同的查询条件查询打印发热条码信息。
+4.4.2.5.2发热送样单打印
+　　　支持疾控业务人员通过设定不同的查询条件查询打印已生成的发热送样单信息。
+4.4.2.5.3肠道条码打印
+　　　支持疾控业务人员通过设定不同的查询条件查询打印已生成的肠道送样单信息。
+4.4.2.5.4复核送样单打印
+　　　支持疾控业务人员通过设定不同的查询条件查询打印已生成的复核送样单信息。
+4.4.2.6.外部接口
+4.4.2.6.1市级传染病综合监测预警平台上传数据接口
+　　　系统提供市级传染病综合监测预警平台上传数据接口，根据市级平台标准接口规范，实现区平台监测数据的上传，包括以下接口内容：
+?上传门急诊发热病例信息数据接口
+?上传住院发热病例信息数据接口
+?上传肠道监测病例信息（含成人腹综）数据接口
+?上传儿童腹综病例信息数据接口
+?上传儿童传染病症候群监测病例信息数据接口
+?上传发热监测送样单信息数据接口
+?上传肠道监测送样单信息数据接口
+?上传复核送样单信息数据接口
+?上传病例附件信息数据接口
+4.4.2.6.2市级传染病综合监测预警平台下推数据接口
+　　　系统提供接收市级传染病综合监测预警平台下推数据接口，获取本区市级平台推送信息，以支撑以人为中心的跨区一体化业务及管理工作开展，包括以下接口内容：
+?接收门急诊发热病例信息数据接口
+?接收住院发热病例信息数据接口
+?接收肠道监测病例信息（含成人腹综）数据接口
+?接收儿童腹综病例信息数据接口
+?接收儿童传染病症候群监测病例信息数据接口
+?接收发热监测送样单信息数据接口
+?接收肠道监测送样单信息数据接口
+?接收复核送样单信息数据接口
+?接收病例附件信息数据接口
+?接收医院基础信息数
+4.4.2.6.3区传染病直报系统接口
+1、接收传报卡信息接口
+提供接口获取区传染病直报系统推送的传报卡信息。
+2、推送病原学阳性病例
+　　在发现病原学检测阳性后实时向传染病直报系统推送阳性病例信息
+
+
+
